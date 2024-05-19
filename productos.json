@@ -1,0 +1,11 @@
+[
+	{
+		"id": 1,
+		"title": "Bateria",
+		"description": "MF55457",
+		"price": 59990,
+		"thumbnail": "imagenHankook",
+		"code": "09180",
+		"stock": 20
+	}
+]
