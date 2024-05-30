@@ -22,6 +22,7 @@ export default class CartManager {
     };
 
     #readCarts = async () => {
+        await this.#ensureFileExists();
         const respuesta = await fs.promises.readFile(this.path, "utf8");
         return JSON.parse(respuesta);
     };
@@ -36,8 +37,17 @@ export default class CartManager {
         return cartId;
     };
 
+    #ensureFileExists = async () => {
+        try {
+            await fs.promises.access(this.path, fs.constants.F_OK);
+        } catch (error) {
+            await this.#escribirArchivo([]);
+        }
+    };
+
     // Funciones públicas
     addCart = async () => {
+        await this.#ensureFileExists();
         let carts = await this.#readCarts();
 
         const cart = {
@@ -52,33 +62,48 @@ export default class CartManager {
 
     getCartById = async (id) => {
         const respuesta = await this.#identifyId(id);
-        !respuesta ? console.log("Not found") : console.log(respuesta);
+        if(!respuesta){
+            return "Not found"
+        } else {
+            return respuesta;
+        } 
     };
 
     addProductToCart = async (cartId, productId) => {
+        await this.#ensureFileExists(); // Asegura que el archivo exista antes de cualquier operación
         try {
-            let cartById = this.getCartById(cartId);
-            let productById = PRODUCT.getProductById(productId);
-            if (cartById && !productById) {
-                let carts = await this.#readCarts();
-                const index = carts.findIndex(cart => cart.id === cartId);
-                carts[index].products.push({productId, cantidad: 1});
+            let cartById = await this.getCartById(cartId);
+            let productById = await PRODUCT.getProductById(productId);
+    
+            if (!cartById) {
+                return "Carrito no encontrado";
+            }
+    
+            if (!productById) {
+                return "Producto no encontrado";
+            }
+    
+            let carts = await this.#readCarts();
+            const cartIndex = carts.findIndex(cart => cart.id === cartId);
+            const productIndex = carts[cartIndex].products.findIndex(product => product.productId === productId);
+    
+            if (productIndex === -1) {
+                carts[cartIndex].products.push({ productId, cantidad: 1 });
                 await this.#escribirArchivo(carts);
-                return console.log("Producto Agregado");
-            } else if(cartById && productById){
-                let carts = await this.#readCarts();
-                const index = carts.findIndex(cart => cart.id === cartId);
-                const indexProduct = carts[index].products.findIndex(product => product.productId === productId);
-                carts[index].products[indexProduct].cantidad += 1;
+                return "Producto Agregado";
+            } else {
+                carts[cartIndex].products[productIndex].cantidad += 1;
                 await this.#escribirArchivo(carts);
-                return console.log("Producto Sumado");
+                return "Cantidad del Producto Incrementada";
             }
         } catch (error) {
-            return console.log("Carrito o Producto inexistente");
+            console.error("Error al agregar producto al carrito:", error);
+            return "Error interno";
         }
-    }
-
+    };
+    
     deleteCartById = async (id) => {
+        await this.#ensureFileExists();
         let carts = await this.#readCarts();
         carts = carts.filter(cart => cart.id !== id);
         await this.#escribirArchivo(carts);
@@ -86,6 +111,7 @@ export default class CartManager {
     };
     
     getCarts = async () => {
+        await this.#ensureFileExists();
         const carts = await this.#readCarts();
         return carts;
     };
