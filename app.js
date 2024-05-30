@@ -6,6 +6,7 @@ import cartRouter from "./src/router/cart.routes.js";
 const PORT = 8080;
 const HOST = "localhost"; // 127.0.0.1
 const APP = express();
+
 APP.use(express.urlencoded({extended: true})); // para recibir los datos en urlencoded desde postman
 APP.use(express.json());
 
