@@ -97,7 +97,6 @@ export default class CartManager {
                 return "Cantidad del Producto Incrementada";
             }
         } catch (error) {
-            console.error("Error al agregar producto al carrito:", error);
             return "Error interno";
         }
     };

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import ProductManager from "../controllers/ProductManager.js";
+// import uploader from "../utils/uploader.js";
 
 const productRouter  = Router();
 const PRODUCT = new ProductManager();
@@ -9,6 +10,7 @@ productRouter.post('/', async (req, res) => {
     const {category, title, description, price, thumbnail, code, stock} = req.body;
     return res.status(201).send(await PRODUCT.addProduct(category, title, description, price, thumbnail, code, stock));
 });
+
 
 productRouter.get('/', async (req, res) => {
     return res.status(200).send(await PRODUCT.getProducts());
