@@ -19,6 +19,7 @@ export default class ProductManager {
     };
 
     #readProductos = async () => {
+        await this.#ensureFileExists();
         const respuesta = await fs.promises.readFile(this.path, "utf8");
         return JSON.parse(respuesta);
     };
@@ -29,7 +30,7 @@ export default class ProductManager {
 
     #validateCode = (products, code) => {
         const validate = products.find(product => product.code === code);
-        if (validate) {
+        if(validate){
             console.log("El codigo ya existe");
         }
         return !validate;
@@ -41,8 +42,17 @@ export default class ProductManager {
         return productId;
     };
 
+    #ensureFileExists = async () => {
+        try {
+            await fs.promises.access(this.path, fs.constants.F_OK);
+        } catch (error) {
+            await this.#escribirArchivo([]);
+        }
+    };
+
     // Funciones públicas
     addProduct = async (category, title, description, price, thumbnail, code, stock, available) => {
+        await this.#ensureFileExists();
         let products = await this.#readProductos();
         const product = {
             id: this.#generarId(products),
@@ -67,6 +77,7 @@ export default class ProductManager {
     };
 
     getProductById = async (id) => {
+        await this.#ensureFileExists();
         const respuesta = await this.#identifyId(id);
         if(!respuesta){
             return "Not Found"
@@ -76,6 +87,7 @@ export default class ProductManager {
     };
 
     deleteProductById = async (id) => {
+        await this.#ensureFileExists();
         let products = await this.#readProductos();
         products = products.filter(product => product.id !== id);
         await this.#escribirArchivo(products);
@@ -83,6 +95,7 @@ export default class ProductManager {
     };
 
     updateProduct = async ({ id, ...product }) => {
+        await this.#ensureFileExists();
         const existingProduct = await this.#identifyId(id);
         if (existingProduct) {
             let products = await this.#readProductos();
@@ -95,6 +108,7 @@ export default class ProductManager {
     };
 
     toggleAvailability = async (id) => {
+        await this.#ensureFileExists();
         let products = await this.#readProductos();
         const index = products.findIndex(product => product.id === id);
         if (index === -1) {
@@ -106,6 +120,7 @@ export default class ProductManager {
     };
 
     getProducts = async () => {
+        await this.#ensureFileExists();
         const products = await this.#readProductos();
         return products;
     };
