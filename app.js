@@ -1,25 +1,22 @@
-import ProductManager from "./ProductManager.js";
+/* Servidor Express */
+import express from "express";
+import productRouter from "./src/router/product.routes.js";
+import cartRouter from "./src/router/cart.routes.js";
 
-const productoAgregado = new ProductManager();
+const PORT = 8080;
+const HOST = "localhost"; // 127.0.0.1
+const APP = express();
+APP.use(express.urlencoded({extended: true})); // para recibir los datos en urlencoded desde postman
+APP.use(express.json());
 
-const demo = async () => {
-    await productoAgregado.addProduct("title1", "description1", 1000, "image1", "abc123", 5);
-    await productoAgregado.addProduct("title2", "description2", 2000, "image2", "abc234", 10);
-    await productoAgregado.addProduct("title3", "description3", 3000, "image3", "abc234", 15);
-    await productoAgregado.addProduct("title3", "description3", 3000, "", "bcd234", 15);
-    
-    // await productoAgregado.getProductById(1);
-    await productoAgregado.deleteProductById(2);
+APP.use("/api/products", productRouter);
+APP.use("/api/carts", cartRouter);
 
-    await productoAgregado.updateProduct({
-        id: 1,
-        title: "Bateria",
-        description: "MF55457",
-        price: 59990,
-        thumbnail: "imagenHankook",
-        code: "09180",
-        stock: 20
-    });
-    
-    await productoAgregado.getProducts();
-}; demo();
+// Metodo que gestiona las rutas inexistentes.
+APP.use("*", (req, res) => { 
+    return res.status(404).send("<h1>Error 404: Not Found</h1>");
+});
+
+APP.listen(PORT, () => {
+    console.log(`Ejecutandose en http://${HOST}:${PORT}`);
+});

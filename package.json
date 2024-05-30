@@ -1,13 +1,19 @@
 {
-  "name": "actividad-2",
+  "name": "actividad-3",
   "version": "1.0.0",
   "description": "",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-    
+    "start": "node --watch --no-warnings app.js",
+    "stop-mac": "pkill -f node",
+    "stop-linux": "killall -9 node",
+    "stop-windows": "taskkill /F /IM node.exe"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
 }
