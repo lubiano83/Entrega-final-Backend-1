@@ -58,20 +58,5 @@
 		"code": "09184",
 		"stock": 20,
 		"available": true
-	},
-	{
-		"id": 5,
-		"category": "Bateria",
-		"title": "MF55459",
-		"description": "55AH",
-		"price": 79890,
-		"thumbnail": [
-			"fotoBateria1",
-			"fotoBateria2",
-			"fotoBateria3"
-		],
-		"code": "09185",
-		"stock": 20,
-		"available": true
 	}
 ]
