@@ -5,6 +5,7 @@ const PATH = {
     src: path.join(path.dirname(""), "src"),
     public: path.join(path.dirname(""), "src", "public"),
     images: path.join(path.dirname(""), "src", "public", "images"),
+    html: path.join(path.dirname(""), "src", "public", "html"),
     views: path.join(path.dirname(""), "src", "views"),
 };
 

@@ -1,9 +1,9 @@
 import multer from "multer";
-import PATH from "./path.js";
+import path from "path";
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
-        cb(null, PATH.join(PATH.images));
+        cb(null, path.join(path.basename("src"), "public", "images"));
     },
     filename: function(req, file, cb){
         cb(null, file.originalname);

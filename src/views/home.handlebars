@@ -1,5 +1,18 @@
-<h1>Home</h1>
+<h1>Productos:</h1>
 
-{{!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{{#each products}}
+    <div class="product">
+        <p>Id: {{this.id}}</p>
+        <p>Category: {{this.category}}</p>
+        <p>Title: {{this.title}}</p>
+        <p>Description:: {{this.description}}</p>
+        <p>Price: {{this.price}}</p>
+        <p>Thumbnail: {{this.thumbnail}}</p>
+        <p>Code: {{this.code}}</p>
+        <p>Available: {{this.available}}</p>
+    </div>
+{{/each}}
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/socket.io/socket.io.js"></script>
-<script src="/api/public/index.js"></script> --}}
+<script src="/api/public/js/home.js"></script>

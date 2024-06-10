@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Administracion</title>
+</head>
+<h1>Panel de Administración</h1>
+<body>
+    <form
+  action="/api/products"
+  method="POST"
+  enctype="multipart/form-data"
+  class="ingresoProductos"
+>
+  <div>
+    <input type="file" name="file" id="file" required />
+  </div>
+  <div>
+    <input
+      type="text"
+      name="category"
+      id="category"
+      required
+      placeholder="Category"
+    />
+  </div>
+  <div>
+    <input type="text" name="title" id="title" required placeholder="Title" />
+  </div>
+  <div>
+    <input
+      type="text"
+      name="description"
+      id="description"
+      required
+      placeholder="Description"
+    />
+  </div>
+  <div>
+    <input
+      type="number"
+      name="price"
+      id="price"
+      step="10"
+      required
+      placeholder="Price"
+    />
+  </div>
+  <div>
+    <input type="text" name="code" id="code" required placeholder="Code" />
+  </div>
+  <div>
+    <input
+      type="number"
+      name="stock"
+      id="stock"
+      step="1"
+      required
+      placeholder="Stock"
+    />
+  </div>
+  <input type="submit" value="Guardar" class="button" />
+</form>
+</body>
+</html>

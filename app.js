@@ -13,13 +13,15 @@ const APP = express();
 APP.use(express.urlencoded({ extended: true })); // para recibir los datos en urlencoded desde postman
 APP.use(express.json());
 
+// declaracion de ruta estatica
+APP.use("/", express.static(PATH.html));
+APP.use("/", express.static(PATH.public));
+APP.use("/api/products", express.static(PATH.public));
+
 // configuracion del motor de plantillas
 handlebars.CONFIG(APP);
 
-// declaracion de ruta estatica
-APP.use("/", express.static(PATH.public));
-
-// aca van los Router
+// Declaración de enrutadores
 APP.use("/api/products", productRouter);
 APP.use("/api/carts", cartRouter);
 
