@@ -20,7 +20,7 @@ productRouter.post("/", uploader.single("file"), async (req, res) => {
 });
 
 productRouter.get("/", async (req, res) => {
-    return res.status(200).render(await PRODUCT.getProducts());
+    return res.status(200).send(await PRODUCT.getProducts());
 });
 
 productRouter.get("/:id", async (req, res) => {

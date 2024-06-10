@@ -58,5 +58,18 @@
 		"code": "09184",
 		"stock": 20,
 		"available": true
+	},
+	{
+		"id": 5,
+		"category": "Bateria",
+		"title": "MF55b24L",
+		"description": "55AH",
+		"price": 59890,
+		"thumbnail": [
+			"foto1"
+		],
+		"code": "09186",
+		"stock": 20,
+		"available": true
 	}
 ]
