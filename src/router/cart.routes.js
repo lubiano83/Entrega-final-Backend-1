@@ -5,27 +5,27 @@ const cartRouter = Router();
 const CART = new CartManager();
 
 // Cart Manager
-cartRouter.post('/', async (req, res) => {
+cartRouter.post("/", async (req, res) => {
     res.status(201).send(await CART.addCart());
 });
 
-cartRouter.get('/', async (req, res) => {
+cartRouter.get("/", async (req, res) => {
     res.status(200).send(await CART.getCarts());
 });
 
-cartRouter.get('/:id', async (req, res) => {
-    let id = Number(req.params.id);
-    res.status(200).send(await CART.getCartById(id));
+cartRouter.get("/:id", async (req, res) => {
+    const ID = Number(req.params.id);
+    res.status(200).send(await CART.getCartById(ID));
 });
 
-cartRouter.delete('/:id', async (req, res) => {
-    let id = Number(req.params.id);
-    return res.status(200).send(await CART.deleteCartById(id));
+cartRouter.delete("/:id", async (req, res) => {
+    const ID = Number(req.params.id);
+    return res.status(200).send(await CART.deleteCartById(ID));
 });
 
-cartRouter.post('/:cid/products/:pid', async (req, res) => {
-    let cartId = Number(req.params.cid);
-    let productId = Number(req.params.pid);
+cartRouter.post("/:cid/products/:pid", async (req, res) => {
+    const cartId = Number(req.params.cid);
+    const productId = Number(req.params.pid);
     res.status(200).send(await CART.addProductToCart(cartId, productId));
 });
 

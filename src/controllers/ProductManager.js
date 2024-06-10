@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 
 export default class ProductManager {
     // Constructor
@@ -10,7 +10,7 @@ export default class ProductManager {
     // Funciones privadas
     #generarId = (products) => {
         let idMayor = 0;
-        products.forEach(product => {
+        products.forEach((product) => {
             if (product.id > idMayor) {
                 idMayor = product.id;
             }
@@ -29,7 +29,7 @@ export default class ProductManager {
     };
 
     #validateCode = (products, code) => {
-        const validate = products.find(product => product.code === code);
+        const validate = products.find((product) => product.code === code);
         if(validate){
             console.log("El codigo ya existe");
         }
@@ -38,7 +38,7 @@ export default class ProductManager {
 
     #identifyId = async (id) => {
         const respuesta = await this.#readProductos();
-        const productId = respuesta.find(product => product.id === id);
+        const productId = respuesta.find((product) => product.id === id);
         return productId;
     };
 
@@ -53,7 +53,7 @@ export default class ProductManager {
     // Funciones públicas
     addProduct = async (category, title, description, price, thumbnail, code, stock, available) => {
         await this.#ensureFileExists();
-        let products = await this.#readProductos();
+        const products = await this.#readProductos();
         const product = {
             id: this.#generarId(products),
             category,
@@ -63,13 +63,13 @@ export default class ProductManager {
             thumbnail,
             code,
             stock,
-            available: available !== undefined ? available : true
+            available: available !== undefined ? available : true,
         };
         if (!category || !title || !description || !price || !code || !stock) {
             console.log("Todos los campos son obligatorios");
         } else {
             if (this.#validateCode(products, code)) {
-                let productoAgregado = [...products, product];
+                const productoAgregado = [ ...products, product ];
                 await this.#escribirArchivo(productoAgregado);
                 return "Producto Agregado";
             }
@@ -80,16 +80,16 @@ export default class ProductManager {
         await this.#ensureFileExists();
         const respuesta = await this.#identifyId(id);
         if(!respuesta){
-            return "Not Found"
+            return "Not Found";
         } else {
-            return respuesta
+            return respuesta;
         }
     };
 
     deleteProductById = async (id) => {
         await this.#ensureFileExists();
         let products = await this.#readProductos();
-        products = products.filter(product => product.id !== id);
+        products = products.filter((product) => product.id !== id);
         await this.#escribirArchivo(products);
         return "Producto Eliminado";
     };
@@ -99,7 +99,7 @@ export default class ProductManager {
         const existingProduct = await this.#identifyId(id);
         if (existingProduct) {
             let products = await this.#readProductos();
-            products = products.map(p => p.id === id ? { id, ...product } : p);
+            products = products.map((p) => p.id === id ? { id, ...product } : p);
             await this.#escribirArchivo(products);
             return "Producto Modificado";
         } else {
@@ -109,8 +109,8 @@ export default class ProductManager {
 
     toggleAvailability = async (id) => {
         await this.#ensureFileExists();
-        let products = await this.#readProductos();
-        const index = products.findIndex(product => product.id === id);
+        const products = await this.#readProductos();
+        const index = products.findIndex((product) => product.id === id);
         if (index === -1) {
             return "Producto no encontrado";
         }

@@ -1,20 +1,29 @@
 {
-  "name": "actividad-3",
+  "name": "clase-11",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node --watch --no-warnings app.js",
+    "start": "node app.js",
+    "dev": "node --watch --no-warnings app.js",
     "stop-mac": "pkill -f node",
     "stop-linux": "killall -9 node",
-    "stop-windows": "taskkill /F /IM node.exe"
+    "stop-windows": "taskkill /F /IM node.exe",
+    "lint": "eslint ./src --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",
+    "express-handlebars": "^7.1.2",
+    "socket.io": "^4.7.5",
+    "sweetalert2": "^11.11.1",
     "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"
   }
 }
+
