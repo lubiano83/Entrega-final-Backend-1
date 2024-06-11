@@ -15,13 +15,15 @@ APP.use(express.json());
 
 // declaracion de ruta estatica
 APP.use("/", express.static(PATH.html));
-APP.use("/", express.static(PATH.public));
-APP.use("/api/products", express.static(PATH.public));
+APP.use("/", express.static(PATH.css));
+APP.use("/api/products", express.static(PATH.css));
+APP.use("/api/products", express.static(PATH.images));
 
 // configuracion del motor de plantillas
 handlebars.CONFIG(APP);
 
 // Declaración de enrutadores
+APP.use("/", productRouter);
 APP.use("/api/products", productRouter);
 APP.use("/api/carts", cartRouter);
 

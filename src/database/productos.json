@@ -71,5 +71,42 @@
 		"code": "09186",
 		"stock": 20,
 		"available": true
+	},
+	{
+		"id": 6,
+		"category": "Bateria",
+		"title": "MF195D21R",
+		"description": "60AH",
+		"price": 109890,
+		"thumbnail": [
+			"foto1"
+		],
+		"code": "09188",
+		"stock": 20,
+		"available": true
+	},
+	{
+		"id": 7,
+		"category": "Bateria",
+		"title": "MF195D21L",
+		"description": "60AH",
+		"price": 109890,
+		"thumbnail": [
+			"foto1"
+		],
+		"code": "09189",
+		"stock": 20,
+		"available": true
+	},
+	{
+		"id": 8,
+		"category": "perro",
+		"title": "rocco",
+		"description": "perro4",
+		"price": "100",
+		"thumbnail": "rocco.jpeg",
+		"code": "asd123",
+		"stock": "5",
+		"available": true
 	}
 ]

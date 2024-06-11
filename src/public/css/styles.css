@@ -50,4 +50,10 @@ body .product {
     flex-flow: column nowrap;
     justify-content: center;
     align-items: flex-start;
+    border: 2px solid black;
+}
+
+body .product img {
+    width: 100%;
+    aspect-ratio: 1/1;
 }

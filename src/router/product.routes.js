@@ -18,8 +18,8 @@ productRouter.post("/", uploader.single("file"), async (req, res) => {
     const { category, title, description, price, code, stock } = req.body;
 
     try {
-        await PRODUCT.addProduct({ category, title, description, price, thumbnail: filename, code, stock });
-        res.redirect("http://localhost:8080/");
+        await PRODUCT.addProduct( category, title, description, price, filename, code, stock );
+        return res.redirect("http://localhost:8080/");
     } catch (error) {
         res.status(500).send({ state: "error", message: error.message });
     }
