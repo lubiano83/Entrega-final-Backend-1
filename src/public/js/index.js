@@ -3,6 +3,7 @@ console.log("Hola desde el server");
 
 const SOCKET = io();
 const FORM = document.getElementById("form");
+const DELETE = document.getElementById("delete");
 
 // esto es para escuchar un mensaje
 SOCKET.on("connect", () => {
@@ -54,6 +55,21 @@ FORM.addEventListener("submit", function(event) {
     };
     SOCKET.emit("add-product", product);
     FORM.reset();
+});
+
+DELETE.addEventListener("click", function(event) {
+    event.preventDefault();
+    const id = document.getElementById("id").value;
+    try {
+        if (id) {
+            SOCKET.emit("delete-product", id);
+            document.getElementById("id").value = ""; // Resetea el campo input
+        } else {
+            alert("Please enter a product ID.");
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
 });
 
 // esto aparece al desconectar el servidor (control+C).

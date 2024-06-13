@@ -102,20 +102,5 @@
 		"code": "09187",
 		"stock": 10,
 		"available": true
-	},
-	{
-		"id": 9,
-		"category": "Pala",
-		"title": "Nox",
-		"description": "asdasda",
-		"price": 1000,
-		"thumbnail": [
-			[
-				"https://firebasestorage.googleapis.com/v0/b/padel-store-5ede4.appspot.com/o/img%2Fpala-nox.webp?alt=media&token=eee11a2e-f581-4806-9aa3-36090ca95df6"
-			]
-		],
-		"code": "asd123",
-		"stock": 1,
-		"available": true
 	}
 ]

@@ -29,6 +29,18 @@ const CONFIG = (serverHTTP) => {
             }
         });
 
+        socket.on("delete-product", async (id) => {
+            console.log(id);
+            try {
+                await PRODUCT.deleteProductById(Number(id));
+                const updatedProducts = await PRODUCT.getProducts();
+                socket.emit("products", updatedProducts);
+            } catch (error) {
+                console.error("Error al eliminar producto:", error);
+                socket.emit("productsError", { message: "Error al eliminar producto" });
+            }
+        });
+
         socket.on("disconnect", () => {
             console.log("Se desconecto un Cliente");
         });

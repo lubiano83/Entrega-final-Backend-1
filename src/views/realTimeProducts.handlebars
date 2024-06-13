@@ -1,14 +1,12 @@
 <div class="container">
   <h1>Panel de Administracion</h1>
-    <h2>Ingresar Producto:</h2>
     <form action="/api/products" method="POST" enctype="multipart/form-data" class="ingresoProductos" id="form">
-      <div class="container__foto">
-        <input type="text" name="file" id="file" required class="foto" placeholder="Ingresa la ruta de la imagen.."/>
-      </div>
+    <h2>Ingresar Producto:</h2>
       <div class="ingresoProductos__container">
         <input type="text" name="code" id="code" placeholder="Code" required />
         <input type="text" name="category" id="category" placeholder="Category" required />
         <input type="text" name="title" id="title" placeholder="Title" required />
+        <input type="text" name="file" id="file" required class="foto" placeholder="Ingresa la ruta de la imagen.."/>
         <input type="number" name="price" id="price" step="10" placeholder="Price" required />
         <input type="number" name="stock" id="stock" step="1" placeholder="Stock" required />
         <input type="text" name="description" id="description" placeholder="Description" required />
@@ -17,6 +15,11 @@
         <input type="reset" value="Limpiar" class="button" />
         <input type="submit" value="Guardar" class="button" />
       </section>
+    </form>
+     <h2>Eliminar Producto:</h2>
+    <form class="ingresoProductos" id="delete-form">
+        <input type="number" name="id" id="id" placeholder="Id" required class="id">
+        <input type="submit" value="Eliminar" id="delete">
     </form>
     <h1>Real Time Products</h1>
   <table class="container__table">
