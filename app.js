@@ -18,10 +18,7 @@ APP.use(express.json());
 handlebars.CONFIG(APP);
 
 // declaracion de ruta estatica
-// APP.use("/", express.static(PATH.html));
 APP.use("/", express.static(PATH.css));
-APP.use("/api/products", express.static(PATH.css));
-APP.use("/api/products", express.static(PATH.images));
 APP.use("/realTimeProducts", express.static(PATH.js));
 APP.use("/realTimeProducts", express.static(PATH.css));
 APP.use("/realTimeProducts", express.static(PATH.images));

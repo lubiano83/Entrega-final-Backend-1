@@ -2,7 +2,9 @@
   <h1>Panel de Administracion</h1>
     <h2>Ingresar Producto:</h2>
     <form action="/api/products" method="POST" enctype="multipart/form-data" class="ingresoProductos" id="form">
-      <input type="file" name="file" id="file" required class="foto" />
+      <div class="container__foto">
+        <input type="text" name="file" id="file" required class="foto" placeholder="Ingresa la ruta de la imagen.."/>
+      </div>
       <div class="ingresoProductos__container">
         <input type="text" name="code" id="code" placeholder="Code" required />
         <input type="text" name="category" id="category" placeholder="Category" required />
