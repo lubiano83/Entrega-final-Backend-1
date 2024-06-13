@@ -2,6 +2,7 @@
 import express from "express";
 import productRouter from "./src/router/product.routes.js";
 import cartRouter from "./src/router/cart.routes.js";
+import viewsRouter from "./src/router/views.routes.js";
 import PATH from "./src/utils/path.js";
 import handlebars from "./src/config/handlebars.config.js";
 import serverSocket from "./src/config/socket.config.js";
@@ -13,17 +14,20 @@ const APP = express();
 APP.use(express.urlencoded({ extended: true })); // para recibir los datos en urlencoded desde postman
 APP.use(express.json());
 
-// declaracion de ruta estatica
-APP.use("/", express.static(PATH.html));
-APP.use("/", express.static(PATH.css));
-APP.use("/api/products", express.static(PATH.css));
-APP.use("/api/products", express.static(PATH.images));
-
 // configuracion del motor de plantillas
 handlebars.CONFIG(APP);
 
+// declaracion de ruta estatica
+// APP.use("/", express.static(PATH.html));
+APP.use("/", express.static(PATH.css));
+APP.use("/api/products", express.static(PATH.css));
+APP.use("/api/products", express.static(PATH.images));
+APP.use("/realTimeProducts", express.static(PATH.js));
+APP.use("/realTimeProducts", express.static(PATH.css));
+APP.use("/realTimeProducts", express.static(PATH.images));
+
 // Declaración de enrutadores
-APP.use("/", productRouter);
+APP.use("/", viewsRouter);
 APP.use("/api/products", productRouter);
 APP.use("/api/carts", cartRouter);
 
@@ -43,4 +47,5 @@ const serverHTTP = APP.listen(PORT, () => {
     console.log(`Ejecutandose en http://${HOST}:${PORT}`);
 });
 
+// asi enviamos el serverHttp al socket.config.js.
 serverSocket.CONFIG(serverHTTP);

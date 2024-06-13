@@ -1,5 +1,41 @@
-<h1>RealTimeProducts</h1>
+<div class="container">
+  <h1>Panel de Administracion</h1>
+    <h2>Ingresar Producto:</h2>
+    <form action="/api/products" method="POST" enctype="multipart/form-data" class="ingresoProductos" id="form">
+      <input type="file" name="file" id="file" required class="foto" />
+      <div class="ingresoProductos__container">
+        <input type="text" name="code" id="code" placeholder="Code" required />
+        <input type="text" name="category" id="category" placeholder="Category" required />
+        <input type="text" name="title" id="title" placeholder="Title" required />
+        <input type="number" name="price" id="price" step="10" placeholder="Price" required />
+        <input type="number" name="stock" id="stock" step="1" placeholder="Stock" required />
+        <input type="text" name="description" id="description" placeholder="Description" required />
+      </div>
+      <section>
+        <input type="reset" value="Limpiar" class="button" />
+        <input type="submit" value="Guardar" class="button" />
+      </section>
+    </form>
+    <h1>Real Time Products</h1>
+  <table class="container__table">
+    <thead class="table__categories">
+      <tr class="categories__list">
+        <th class="id">Id:</th>
+        <th class="code">Code:</th>
+        <th class="category">Category:</th>
+        <th class="title">Title:</th>
+        <th class="thumbnail">Thumbnail:</th>
+        <th class="price">Price:</th>
+        <th class="stock">Stock:</th>
+        <th class="available">Available:</th>
+      </tr>
+    </thead>
+    <tbody class="table__categories" id="tbody">
+      {{!-- Aqui van todos los productos --}}
+    </tbody>
+  </table>
+</div> 
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/socket.io/socket.io.js"></script>
-<script src="/api/public/js/home.js"></script>
+<script src="index.js"></script>

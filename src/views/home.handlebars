@@ -1,18 +1,31 @@
-<h1>Productos:</h1>
-
-{{#each products}}
-    <div class="product">
-        <img src={{this.thumbnail}} alt="">
-        <p>Id: {{this.id}}</p>
-        <p>Category: {{this.category}}</p>
-        <p>Title: {{this.title}}</p>
-        <p>Description:: {{this.description}}</p>
-        <p>Price: {{this.price}}</p>
-        <p>Code: {{this.code}}</p>
-        <p>Available: {{this.available}}</p>
-    </div>
-{{/each}}
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="/api/public/js/home.js"></script>
+<div class="container">
+  <h1>Products</h1>
+  <table class="container__table">
+    <thead class="table__categories">
+      <tr class="categories__list">
+        <th class="id">Id:</th>
+        <th class="code">Code:</th>
+        <th class="category">Category:</th>
+        <th class="title">Title:</th>
+        <th class="thumbnail">Thumbnail:</th>
+        <th class="price">Price:</th>
+        <th class="stock">Stock:</th>
+        <th class="available">Available:</th>
+      </tr>
+    </thead>
+    <tbody class="table__categories">
+      {{#each products}}
+      <tr class="categories__item">
+        <td class="id">{{this.id}}</td>
+        <td class="code">{{this.code}}</td>
+        <td class="category">{{this.category}}</td>
+        <td class="title">{{this.title}}</td>
+        <td class="thumbnail"><a href="{{this.thumbnail.[0]}}" target="_blank">{{this.thumbnail.[0]}}</a></td>
+        <td class="price">{{this.price}}</td>
+        <td class="stock">{{this.stock}}</td>
+        <td class="available">{{this.available}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

@@ -1,19 +1,38 @@
 /* Servidor */
 import { Server } from "socket.io";
+import ProductManager from "../controllers/ProductManager.js";
 
-const MESSAGES = [];
+const PRODUCT = new ProductManager();
 
 const CONFIG = (serverHTTP) => {
-    const serverSocket = new Server(serverHTTP);
-    serverSocket.on("connection", (socket) => {
-        console.log("Cliente Conectado");
-        socket.on("message", (data) => {
-            const { user, message } = data;
-            MESSAGES.push({ user, message });
-            serverSocket.emit("message-logs", { MESSAGES });
+    const serverIo = new Server(serverHTTP);
+    serverIo.on("connection", async (socket) => {
+        const id = socket.client.id;
+        console.log("Conexion establecida", id);
+
+        try {
+            const products = await PRODUCT.getProducts();
+            socket.emit("products", products);
+        } catch (error) {
+            console.error("Error al obtener productos:", error);
+            socket.emit("productsError", { message: "Error al obtener productos" });
+        }
+
+        socket.on("add-product", async (product) => {
+            console.log(product);
+            try {
+                await PRODUCT.addProduct({ ...product });
+                socket.emit("products", await PRODUCT.getProducts());
+            } catch (error) {
+                console.error("Error al agregar producto:", error);
+                socket.emit("productsError", { message: "Error al agregar producto" });
+            }
         });
-        socket.on("authenticated", (data) => {
-            socket.broadcast.emit("new-user", data);
+
+        socket.on("disconnect", () => {
+            console.log("Se desconecto un Cliente");
         });
     });
-}; export default { CONFIG };
+};
+
+export default { CONFIG };
