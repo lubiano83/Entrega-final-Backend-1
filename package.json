@@ -12,6 +12,12 @@
     "stop-windows": "taskkill /F /IM node.exe",
     "lint": "eslint ./src --fix"
   },
+  "engines": {
+    "node": "16.14.0"
+  },
+  "repository": {
+    "url": "https://github.com/lubiano83/1era-Entrega-BackEnd"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
