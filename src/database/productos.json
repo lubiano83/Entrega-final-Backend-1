@@ -1,1 +1,15 @@
-[]
+[
+	{
+		"id": 1,
+		"category": "asdads",
+		"title": "asdasd",
+		"description": "saasdasd",
+		"price": 100,
+		"thumbnail": [
+			"asdasd"
+		],
+		"code": "asdasdasd",
+		"stock": 10,
+		"available": true
+	}
+]

@@ -18,13 +18,13 @@ SOCKET.on("products", (products) => {
         rowsHTML += `
             <tr class="categories__item">
                 <td class="id">${product.id}</td>
-                <td class="code">${product.code}</td>
-                <td class="category">${product.category}</td>
-                <td class="title">${product.title}</td>
-                <td class="thumbnail"><a href="${product.thumbnail[0]}" target="_blank">${product.thumbnail[0]}</a></td>
-                <td class="price">${product.price}</td>
-                <td class="stock">${product.stock}</td>
-                <td class="available">${product.available}</td>
+                <td class="code" id=${product.id}>${product.code}</td>
+                <td class="category" id=${product.id}>${product.category}</td>
+                <td class="title" id=${product.id}>${product.title}</td>
+                <td class="thumbnail" id=${product.id}><a href="${product.thumbnail[0]}" target="_blank">${product.thumbnail[0]}</a></td>
+                <td class="price" id=${product.id}>${product.price}</td>
+                <td class="stock" id=${product.id}>${product.stock}</td>
+                <td><button class="available" id=${product.id}>${product.available}</button></td>
                 <td><button class="delete" id=${product.id}>Delete</button></td>
             </tr>
         `;
@@ -34,6 +34,12 @@ SOCKET.on("products", (products) => {
         button.addEventListener("click", function() {
             const productId = this.getAttribute("id");
             SOCKET.emit("delete-product", productId);
+        });
+    });
+    document.querySelectorAll(".available").forEach((button) => {
+        button.addEventListener("click", function() {
+            const productId = this.getAttribute("id");
+            SOCKET.emit("toggle-availability", productId);
         });
     });
 });

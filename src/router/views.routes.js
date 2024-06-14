@@ -5,7 +5,7 @@ import ProductManager from "../controllers/ProductManager.js";
 const ROUTER = Router();
 const PRODUCT = new ProductManager();
 
-ROUTER.get("/products", async (req, res) => {
+ROUTER.get("/", async (req, res) => {
     try {
         const allProducts = await PRODUCT.getProducts();
         return res.status(200).render("home", {
@@ -19,10 +19,6 @@ ROUTER.get("/products", async (req, res) => {
 
 ROUTER.get("/realtimeproducts", async (req, res) => {
     return res.status(200).render("realTimeProducts", { title: "realTimeProducts" });
-});
-
-ROUTER.get("/", async (req, res) => {
-    return res.status(200).render("admin", { title: "Administración" });
 });
 
 // ROUTER.post("/realtimeproducts", uploader.single("file"), async (req, res) => {
