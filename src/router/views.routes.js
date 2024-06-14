@@ -5,7 +5,7 @@ import ProductManager from "../controllers/ProductManager.js";
 const ROUTER = Router();
 const PRODUCT = new ProductManager();
 
-ROUTER.get("/", async (req, res) => {
+ROUTER.get("/products", async (req, res) => {
     try {
         const allProducts = await PRODUCT.getProducts();
         return res.status(200).render("home", {
@@ -21,6 +21,10 @@ ROUTER.get("/realtimeproducts", async (req, res) => {
     return res.status(200).render("realTimeProducts", { title: "realTimeProducts" });
 });
 
+ROUTER.get("/", async (req, res) => {
+    return res.status(200).render("admin", { title: "Administración" });
+});
+
 // ROUTER.post("/realtimeproducts", uploader.single("file"), async (req, res) => {
 //     const { file } = req;
 
@@ -33,7 +37,7 @@ ROUTER.get("/realtimeproducts", async (req, res) => {
 //     const { category, title, description, price, code, stock } = req.body;
 
 //     try {
-//         await PRODUCT.addProduct( category, title, description, price, filename, code, stock );
+//         await PRODUCT.addProduct(category, title, description, price, filename, code, stock);
 //         return res.redirect("http://localhost:8080/realTimeProducts");
 //     } catch (error) {
 //         res.status(500).send({ state: "error", message: error.message });

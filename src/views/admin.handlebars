@@ -1,0 +1,21 @@
+<h1>Panel de Administracion</h1>
+<form action="/api/products" method="POST" enctype="multipart/form-data" class="ingresoProductos" id="form">
+    <h2>Ingresar Producto:</h2>
+    <div class="ingresoProductos__container">
+        <input type="text" name="code" id="code" placeholder="Code" required />
+        <input type="text" name="category" id="category" placeholder="Category" required />
+        <input type="text" name="title" id="title" placeholder="Title" required />
+        <input type="file" name="file" id="file" required class="foto" placeholder="Image"/>
+        <input type="number" name="price" id="price" step="10" placeholder="Price" required />
+        <input type="number" name="stock" id="stock" step="1" placeholder="Stock" required />
+        <input type="text" name="description" id="description" placeholder="Description" required />
+    </div>
+    <section>
+        <input type="reset" value="Limpiar" class="button" />
+        <input type="submit" value="Guardar" class="button" />
+    </section>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="index.js"></script>

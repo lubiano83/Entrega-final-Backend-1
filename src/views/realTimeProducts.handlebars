@@ -1,12 +1,12 @@
 <div class="container">
   <h1>Panel de Administracion</h1>
-    <form action="/api/products" method="POST" enctype="multipart/form-data" class="ingresoProductos" id="form">
+    <form action="/realtimeproducts" method="POST" enctype="multipart/form-data" class="ingresoProductos" id="form">
     <h2>Ingresar Producto:</h2>
       <div class="ingresoProductos__container">
         <input type="text" name="code" id="code" placeholder="Code" required />
         <input type="text" name="category" id="category" placeholder="Category" required />
         <input type="text" name="title" id="title" placeholder="Title" required />
-        <input type="text" name="file" id="file" required class="foto" placeholder="Ingresa la ruta de la imagen.."/>
+        <input type="text" name="file" id="file" required placeholder="Image" required/>
         <input type="number" name="price" id="price" step="10" placeholder="Price" required />
         <input type="number" name="stock" id="stock" step="1" placeholder="Stock" required />
         <input type="text" name="description" id="description" placeholder="Description" required />
@@ -15,11 +15,6 @@
         <input type="reset" value="Limpiar" class="button" />
         <input type="submit" value="Guardar" class="button" />
       </section>
-    </form>
-     <h2>Eliminar Producto:</h2>
-    <form class="ingresoProductos" id="delete-form">
-        <input type="number" name="id" id="id" placeholder="Id" required class="id">
-        <input type="submit" value="Eliminar" id="delete">
     </form>
     <h1>Real Time Products</h1>
   <table class="container__table">
@@ -33,6 +28,7 @@
         <th class="price">Price:</th>
         <th class="stock">Stock:</th>
         <th class="available">Available:</th>
+        <th class="delete" id="delete">Delete:</th>
       </tr>
     </thead>
     <tbody class="table__categories" id="tbody">

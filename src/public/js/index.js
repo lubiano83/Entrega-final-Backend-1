@@ -3,7 +3,6 @@ console.log("Hola desde el server");
 
 const SOCKET = io();
 const FORM = document.getElementById("form");
-const DELETE = document.getElementById("delete");
 
 // esto es para escuchar un mensaje
 SOCKET.on("connect", () => {
@@ -26,10 +25,17 @@ SOCKET.on("products", (products) => {
                 <td class="price">${product.price}</td>
                 <td class="stock">${product.stock}</td>
                 <td class="available">${product.available}</td>
+                <td><button class="delete" id=${product.id}>Delete</button></td>
             </tr>
         `;
     });
     TBODY.innerHTML = rowsHTML; // Establecer el innerHTML de TBODY una sola vez
+    document.querySelectorAll(".delete").forEach((button) => {
+        button.addEventListener("click", function() {
+            const productId = this.getAttribute("id");
+            SOCKET.emit("delete-product", productId);
+        });
+    });
 });
 
 FORM.addEventListener("submit", function(event) {
@@ -55,21 +61,6 @@ FORM.addEventListener("submit", function(event) {
     };
     SOCKET.emit("add-product", product);
     FORM.reset();
-});
-
-DELETE.addEventListener("click", function(event) {
-    event.preventDefault();
-    const id = document.getElementById("id").value;
-    try {
-        if (id) {
-            SOCKET.emit("delete-product", id);
-            document.getElementById("id").value = ""; // Resetea el campo input
-        } else {
-            alert("Please enter a product ID.");
-        }
-    } catch (error) {
-        console.log(error.message);
-    }
 });
 
 // esto aparece al desconectar el servidor (control+C).

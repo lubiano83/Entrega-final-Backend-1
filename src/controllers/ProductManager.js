@@ -51,7 +51,7 @@ export default class ProductManager {
     };
 
     // Funciones públicas
-    addProduct = async ({ category, title, description, price, thumbnail, code, stock, available }) => {
+    addProduct = async ({ category, title, description, price, thumbnail = [], code, stock, available }) => {
         await this.#ensureFileExists();
         const products = await this.#readProductos();
         const product = {
@@ -60,7 +60,7 @@ export default class ProductManager {
             title,
             description,
             price,
-            thumbnail: [thumbnail],
+            thumbnail,
             code,
             stock,
             available: available !== undefined ? available : true,
