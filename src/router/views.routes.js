@@ -33,8 +33,8 @@ ROUTER.get("/realtimeproducts", async (req, res) => {
 //     const { category, title, description, price, code, stock } = req.body;
 
 //     try {
-//         await PRODUCT.addProduct(category, title, description, price, filename, code, stock);
-//         return res.redirect("http://localhost:8080/realTimeProducts");
+//         const product = await PRODUCT.addProduct({ category, title, description, price, filename, code, stock });
+//         res.status(200).json(product);
 //     } catch (error) {
 //         res.status(500).send({ state: "error", message: error.message });
 //     }

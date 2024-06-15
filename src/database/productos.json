@@ -1,15 +1,72 @@
 [
 	{
 		"id": 1,
-		"category": "asdasdasd",
-		"title": "asdadsads",
-		"description": "asdasdsd",
-		"price": 100,
+		"category": "asdasdad",
+		"title": "asdadads",
+		"description": "dadasd",
+		"price": 1000,
 		"thumbnail": [
-			"asdsadasdada"
+			"asdadad"
 		],
-		"code": "adasdasd",
-		"stock": 5,
+		"code": "asdadads",
+		"stock": 10,
+		"available": true
+	},
+	{
+		"id": 2,
+		"category": "asdasd",
+		"title": "asdasda",
+		"description": "adadadas",
+		"price": "1000",
+		"thumbnail": [],
+		"code": "asdad",
+		"stock": "10",
+		"available": true
+	},
+	{
+		"id": 3,
+		"category": "asdasda",
+		"title": "asdasdad",
+		"description": "asdasdad",
+		"price": "1000",
+		"thumbnail": [],
+		"code": "asdasda",
+		"stock": "10",
+		"available": true
+	},
+	{
+		"id": 4,
+		"category": "adadadas",
+		"title": "adasdadad",
+		"description": "saadsad",
+		"price": "1000",
+		"thumbnail": [],
+		"code": "asdasdad",
+		"stock": "10",
+		"available": true
+	},
+	{
+		"id": 5,
+		"category": "gdfdfgdg",
+		"title": "dfgdgfdg",
+		"description": "dadadad",
+		"price": "1000",
+		"thumbnail": [],
+		"code": "fgdgdfg",
+		"stock": "10",
+		"available": true
+	},
+	{
+		"id": 6,
+		"category": "asdadsda|aa|",
+		"title": "fadfsfsfsf",
+		"description": "sdqdqddq",
+		"price": 1000,
+		"thumbnail": [
+			"errfegerggeg"
+		],
+		"code": "sdasdada",
+		"stock": 10,
 		"available": true
 	}
 ]

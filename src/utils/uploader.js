@@ -1,12 +1,13 @@
 import multer from "multer";
 import path from "path";
 
+// Configurar el almacenamiento de multer
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
-        cb(null, path.join(path.basename("src"), "public", "images"));
+        cb(null, path.join("src", "public", "images")); // Construye la ruta correcta
     },
     filename: function(req, file, cb){
-        cb(null, Date.now() + path.extname(file.originalname)); // Renombrar archivo con fecha actual
+        cb(null, Date.now() + path.extname(file.originalname)); // Renombra el archivo con un timestamp
     },
 });
 

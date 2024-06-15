@@ -13,7 +13,7 @@ body {
 }
 .contenedor {
     width: 100%;
-    padding: 0px 30px 0px 30px;
+    padding: 0px 30px 30px 30px;
 }
 /* Titulo */
 .contenedor .titulo {
@@ -29,6 +29,13 @@ body {
     align-items: center;
     flex-direction: column;
     gap: 20px;
+}
+.contenedor .ingresoProductos input {
+    width: 50%;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 2px 2px 2px black;
 }
 .contenedor .ingresoProductos .ingresoProductos__contenedor {
     width: 100%;
@@ -84,24 +91,25 @@ body {
     font-weight: bold;
     padding: 0px 30px 0px 30px;
 }
-.contenedor .contenedor__table th {
-    text-decoration: underline;
-}
 .contenedor .contenedor__table .id {
     width: 50px;
     text-align: center;
+    overflow: hidden;
 }
 .contenedor .contenedor__table .code {
     width: 100px;
     text-align: center;
+    overflow: hidden;
 }
 .contenedor .contenedor__table .category {
     width: 100px;
     text-align: center;
+    overflow: hidden;
 }
 .contenedor .contenedor__table .title {
     width: 100px;
     text-align: center;
+    overflow: hidden;
 }
 .contenedor .contenedor__table .thumbnail {
     width: 125px;
@@ -111,20 +119,25 @@ body {
 .contenedor .contenedor__table .price {
     width: 100px;
     text-align: center;
+    overflow: hidden;
 }
 .contenedor .contenedor__table .stock {
     width: 75px;
     text-align: center;
+    overflow: hidden;
 }
 .contenedor .contenedor__table .available {
     width: 100px;
     text-align: center;
+    overflow: hidden;
 }
 .contenedor .contenedor__table .edit {
     width: 75px;
     text-align: center;
+    overflow: hidden;
 }
 .contenedor .contenedor__table .delete {
     width: 75px;
     text-align: center;
+    overflow: hidden;
 }
