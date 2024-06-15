@@ -1,15 +1,15 @@
 [
 	{
 		"id": 1,
-		"category": "asdads",
-		"title": "asdasd",
-		"description": "saasdasd",
+		"category": "asdasdasd",
+		"title": "asdadsads",
+		"description": "asdasdsd",
 		"price": 100,
 		"thumbnail": [
-			"asdasd"
+			"asdsadasdada"
 		],
-		"code": "asdasdasd",
-		"stock": 10,
+		"code": "adasdasd",
+		"stock": 5,
 		"available": true
 	}
 ]
