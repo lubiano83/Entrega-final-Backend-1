@@ -1,31 +1,25 @@
-<div class="container">
-  <h1>Products</h1>
-  <table class="container__table">
-    <thead class="table__categories">
-      <tr class="categories__list">
-        <th class="id">Id:</th>
-        <th class="code">Code:</th>
-        <th class="category">Category:</th>
-        <th class="title">Title:</th>
-        <th class="thumbnail">Thumbnail:</th>
-        <th class="price">Price:</th>
-        <th class="stock">Stock:</th>
-        <th class="available">Available:</th>
-      </tr>
-    </thead>
-    <tbody class="table__categories">
-      {{#each products}}
-      <tr class="categories__item">
-        <td class="id">{{this.id}}</td>
-        <td class="code">{{this.code}}</td>
-        <td class="category">{{this.category}}</td>
-        <td class="title">{{this.title}}</td>
-        <td class="thumbnail"><a href="{{this.thumbnail.[0]}}" target="_blank">{{this.thumbnail.[0]}}</a></td>
-        <td class="price">{{this.price}}</td>
-        <td class="stock">{{this.stock}}</td>
-        <td class="available">{{this.available}}</td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
-</div>
+<section class="products__table">
+  <h1 class="titulo">Products</h1>
+  <div class="table__categories">
+    {{#each products}}
+      {{#if this.available}}
+      <article class="categories__item">
+        <div class="item__foto">
+          <div class="thumbnail"><a href="{{this.thumbnail.[0]}}" target="_blank">Thumbnail: {{this.thumbnail.[0]}}</a></div>
+        </div>
+        <div class="item__texto">
+          <div class="id">Id: {{this.id}}</div>
+          <div class="code">Code: {{this.code}}</div>
+          <div class="category">Category: {{this.category}}</div>
+          <div class="title">Title: {{this.title}}</div>
+          <div class="price">Price: {{this.price}}</div>
+          <div class="stock">Stock: {{this.stock}}</div>
+          <div class="available">Available: {{this.available}}</div>
+          <div class="description">Description: {{this.description}}</div>
+        </div>
+      </article>
+      {{/if}}
+    {{/each}}
+  </div>
+</section>
+

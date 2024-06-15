@@ -30,13 +30,6 @@ body {
     flex-direction: column;
     gap: 20px;
 }
-.contenedor .ingresoProductos input {
-    width: 50%;
-    height: 30px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 2px 2px 2px black;
-}
 .contenedor .ingresoProductos .ingresoProductos__contenedor {
     width: 100%;
     display: flex;
@@ -50,13 +43,20 @@ body {
     text-align: center;
     box-shadow: 2px 2px 2px black;
 }
+.contenedor .ingresoProductos .contenedor__button {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
 .contenedor .ingresoProductos div .button {
     width: 90px;
     height: 30px;
     border-radius: 10px;
     box-shadow: 2px 2px 2px black;
 }
-/* Tabla */
+/* Real Time Products */
 .contenedor .contenedor__table {
     width: 100%;
     gap: 20px;
@@ -140,4 +140,39 @@ body {
     width: 75px;
     text-align: center;
     overflow: hidden;
+}
+
+/* Products */
+
+body .products__table {
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+}
+body .products__table .titulo {
+    padding: 20px;
+    text-decoration: underline;
+}
+body .products__table .table__categories {
+    text-align: left;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+body .products__table .table__categories .categories__item {
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 300px;
+    aspect-ratio: 1/1.70;
+    overflow: hidden;
+    margin: 0px 15px 30px 15px;
+}
+body .products__table .table__categories .categories__item .item__foto {
+    width: 100%;
+    aspect-ratio: 1/1;
+    background-color: white;
+}
+body .products__table .table__categories .categories__item .item__texto {
+    padding: 10px;
 }
