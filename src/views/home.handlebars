@@ -5,7 +5,7 @@
       {{#if this.available}}
       <article class="categories__item">
         <div class="item__foto">
-          <div class="thumbnail"><a href="{{this.thumbnail.[0]}}" target="_blank">Thumbnail: {{this.thumbnail.[0]}}</a></div>
+          <div><a href={{this.thumbnail.[0]}} target="_blank"><img class="thumbnail" src={{this.thumbnail.[0]}} alt={{this.thumbnail.[0]}}></a></div>
         </div>
         <div class="item__texto">
           <div class="id">Id: {{this.id}}</div>
@@ -14,7 +14,7 @@
           <div class="title">Title: {{this.title}}</div>
           <div class="price">Price: {{this.price}}</div>
           <div class="stock">Stock: {{this.stock}}</div>
-          <div class="available">Available: {{this.available}}</div>
+          {{!-- <div class="available">Available: {{this.available}}</div> --}}
           <div class="description">Description: {{this.description}}</div>
         </div>
       </article>

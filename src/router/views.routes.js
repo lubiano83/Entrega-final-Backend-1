@@ -33,8 +33,7 @@ ROUTER.get("/realtimeproducts", async (req, res) => {
 //     const { category, title, description, price, code, stock } = req.body;
 
 //     try {
-//         const product = await PRODUCT.addProduct({ category, title, description, price, filename, code, stock });
-//         res.status(200).json(product);
+//         res.status(200).send(await PRODUCT.addProduct( category, title, description, price, filename, code, stock ));
 //     } catch (error) {
 //         res.status(500).send({ state: "error", message: error.message });
 //     }
