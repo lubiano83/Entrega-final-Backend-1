@@ -79,7 +79,7 @@ FORM.addEventListener("submit", function(event) {
         thumbnail: [FILE],
         available: true,
     };
-
+    console.log(FILE);
     SOCKET.emit("add-product", product);
     FORM.reset();
 });

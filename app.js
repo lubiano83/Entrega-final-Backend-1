@@ -27,6 +27,7 @@ APP.use("/realTimeProducts", express.static(PATH.images));
 
 // Declaración de enrutadores
 APP.use("/", viewsRouter);
+APP.use("/realtimeproducts", viewsRouter);
 APP.use("/api/products", productRouter);
 APP.use("/api/carts", cartRouter);
 

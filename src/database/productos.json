@@ -1,15 +1,41 @@
 [
 	{
 		"id": 1,
-		"category": "hamburguesa",
-		"title": "pollo frito",
-		"description": "hamburguesa de pollo frito",
-		"price": 10000,
+		"category": "adsasdasd",
+		"title": "asdsadasd",
+		"description": "dasdadd",
+		"price": 1000,
 		"thumbnail": [
-			"https://firebasestorage.googleapis.com/v0/b/barracentral-71b11.appspot.com/o/img%2FHot%20Fritten%20Honey.webp?alt=media&token=f4d38b94-c641-4137-9a01-0ef79db5a017"
+			"C:\\fakepath\\computadora.jpeg"
 		],
-		"code": "asd123",
-		"stock": 20,
+		"code": "asdads",
+		"stock": 10,
+		"available": true
+	},
+	{
+		"id": 2,
+		"category": "asdasdasd",
+		"title": "adasddsad",
+		"description": "dasdsada",
+		"price": 1000,
+		"thumbnail": [
+			"C:\\fakepath\\rocco.jpeg"
+		],
+		"code": "asadads",
+		"stock": 10,
+		"available": true
+	},
+	{
+		"id": 3,
+		"category": "asdasdads",
+		"title": "asdasdad",
+		"description": "dsadadada",
+		"price": 1000,
+		"thumbnail": [
+			"C:\\fakepath\\computadora.jpeg"
+		],
+		"code": "dasdasdad",
+		"stock": 10,
 		"available": true
 	}
 ]
