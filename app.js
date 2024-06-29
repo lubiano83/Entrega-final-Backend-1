@@ -1,5 +1,6 @@
 /* Servidor Express */
 import express from "express";
+import mongoDB from "./src/config/mongoose.config.js";
 import productRouter from "./src/router/product.routes.js";
 import cartRouter from "./src/router/cart.routes.js";
 import viewsRouter from "./src/router/views.routes.js";
@@ -45,6 +46,7 @@ APP.use((error, req, res) => {
 // metodo oyente de solicitudes
 const serverHTTP = APP.listen(PORT, () => {
     console.log(`Ejecutandose en http://${HOST}:${PORT}`);
+    mongoDB.connectDB();
 });
 
 // asi enviamos el serverHttp al socket.config.js.
