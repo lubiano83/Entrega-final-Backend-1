@@ -6,27 +6,52 @@ const CART = new CartManager();
 
 // Cart Manager
 ROUTER.post("/", async (req, res) => {
-    res.status(201).send(await CART.addCart());
+    try {
+        res.status(201).send(await CART.addCart());
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" })
+    }
 });
 
 ROUTER.get("/", async (req, res) => {
-    res.status(200).send(await CART.getCarts());
+    try {
+        res.status(200).send(await CART.getCarts());
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" })
+    }
 });
 
 ROUTER.get("/:id", async (req, res) => {
-    const ID = Number(req.params.id);
-    res.status(200).send(await CART.getCartById(ID));
+    try {
+        const ID = Number(req.params.id);
+        res.status(200).send(await CART.getCartById(ID));
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" })
+    }
 });
 
 ROUTER.delete("/:id", async (req, res) => {
-    const ID = Number(req.params.id);
-    return res.status(200).send(await CART.deleteCartById(ID));
+    try {
+        const ID = Number(req.params.id);
+        return res.status(200).send(await CART.deleteCartById(ID));
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" })
+    }
 });
 
 ROUTER.post("/:cid/products/:pid", async (req, res) => {
-    const cartId = Number(req.params.cid);
-    const productId = Number(req.params.pid);
-    res.status(200).send(await CART.addProductToCart(cartId, productId));
+    try {
+        const cartId = Number(req.params.cid);
+        const productId = Number(req.params.pid);
+        res.status(200).send(await CART.addProductToCart(cartId, productId));
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" })
+    }
 });
 
 export default ROUTER;

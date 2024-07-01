@@ -5,39 +5,75 @@ const ROUTER = Router();
 const PRODUCT = new ProductManager();
 
 // Product Manager
-
 ROUTER.post("/", async (req, res) => {
-    const { category, title, description, price, thumbnail, code, stock } = req.body;
-    return res.status(201).send(await PRODUCT.addProduct(category, title, description, price, thumbnail, code, stock));
+    try {
+        const { category, title, description, price, thumbnail, code, stock } = req.body;
+        const product = await PRODUCT.addProduct({ category, title, description, price, thumbnail, code, stock });
+        res.status(201).json({ status: true, payload: product });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" })
+    }
 });
 
 ROUTER.get("/", async (req, res) => {
-    return res.status(200).send(await PRODUCT.getProducts());
+    try {
+        const products = await PRODUCT.getProducts(req.query);
+        res.status(200).json({ status: true, payload: products });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" })
+    }
 });
 
 ROUTER.get("/:id", async (req, res) => {
-    const ID = Number(req.params.id);
-    return res.status(200).send(await PRODUCT.getProductById(ID));
+    try {
+        const ID = (req.params.id);
+        const product = await PRODUCT.getProductById(ID);
+        res.status(200).json({ status: true, payload: product });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" })
+    }
 });
 
 ROUTER.delete("/:id", async (req, res) => {
-    const ID = Number(req.params.id);
-    return res.status(200).send(await PRODUCT.deleteProductById(ID));
+    try {
+        const ID = (req.params.id);
+        const product = await PRODUCT.deleteProductById(ID);
+        res.status(200).json({ status: true, payload: product });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" })
+    }
 });
 
 ROUTER.put("/:id", async (req, res) => {
-    const id = Number(req.params.id);
-    const { category, title, description, price, thumbnail, code, stock, available } = req.body;
-    return res.status(200).send(await PRODUCT.updateProduct({ id, category, title, description, thumbnail, price, code, stock, available }));
+    try {
+        const id = (req.params.id);
+        const { category, title, description, price, thumbnail, code, stock, available } = req.body;
+        const productUpated = await PRODUCT.updateProduct({ id, category, title, description, thumbnail, price, code, stock, available });
+        res.status(200).json({ status: true, payload: productUpated });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" })
+    }
 });
 
 ROUTER.put("/available/:id", async (req, res) => {
-    const ID = Number(req.params.id);
-    const RESULT = await PRODUCT.toggleAvailability(ID);
-    if (RESULT.error) {
-        return res.status(404).send(RESULT);
+    try {
+        const ID = req.params.id;
+        const RESULT = await PRODUCT.toggleAvailability(ID);
+        
+        if (RESULT === "Producto no encontrado") {
+            return res.status(404).json({ status: false, message: RESULT });
+        }
+
+        return res.status(200).json({ status: true, payload: RESULT });
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).json({ status: false, message: "Hubo un error en el servidor" });
     }
-    return res.status(200).send(RESULT);
 });
 
 export default ROUTER;

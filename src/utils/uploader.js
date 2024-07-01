@@ -1,15 +1,19 @@
 import multer from "multer";
-import path from "path";
+import path from "../utils/paths.js";
+import moment from "moment";
 
-// Configurar el almacenamiento de multer
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
-        cb(null, path.join("src", "public", "images")); // Construye la ruta correcta
+        cb(null, path.images);
     },
     filename: function(req, file, cb){
-        cb(null, Date.now() + path.extname(file.originalname)); // Renombra el archivo con un timestamp
-    },
+        const randomNumber = Math.floor(Math.random()*(9999 - 1000 + 1) + 1000); // esto es para crear un numero entre 1000 y 9999.
+        const dateTime = moment().format("DDMMYYYY_HHmmss");
+        const extension = file.originalname.slice(file.originalname.lastIndexOf("."));
+        const filename = `file_${randomNumber}_${dateTime}${extension}`;
+        cb(null, filename);
+    }
 });
 
-const uploader = multer({ storage });
+const uploader = multer({storage});
 export default uploader;
