@@ -53,18 +53,6 @@ const CONFIG = (serverHTTP) => {
             }
         });
 
-        socket.on("edit-product", async (id) => {
-            console.log(id);
-            try {
-                await PRODUCT.updateProduct(Number(id));
-                const updatedProducts = await PRODUCT.getProducts();
-                socket.emit("products", updatedProducts);
-            } catch (error) {
-                console.error("Error al cambiar disponibilidad:", error);
-                socket.emit("productsError", { message: "Error al cambiar disponibilidad" });
-            }
-        });
-
         socket.on("disconnect", () => {
             console.log("Se desconecto un Cliente");
         });

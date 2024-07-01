@@ -1,6 +1,5 @@
 import { Router } from "express";
 import ProductManager from "../controllers/ProductManager.js";
-import ProductModel from "../models/product.model.js";
 
 const ROUTER = Router();
 const PRODUCT = new ProductManager();
@@ -13,9 +12,7 @@ ROUTER.post("/", async (req, res) => {
 });
 
 ROUTER.get("/", async (req, res) => {
-    const products = await ProductModel.find({});
-    res.json({ status: true, payload: products })
-    // return res.status(200).send(await PRODUCT.getProducts());
+    return res.status(200).send(await PRODUCT.getProducts());
 });
 
 ROUTER.get("/:id", async (req, res) => {

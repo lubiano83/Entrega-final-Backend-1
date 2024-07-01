@@ -1,14 +1,40 @@
 [
 	{
 		"id": 1,
-		"category": "asdasd",
-		"title": "asdasdasd",
-		"description": "dadsasdad",
+		"category": "adsasdasd",
+		"title": "asdsadasd",
+		"description": "dasdadd",
 		"price": 1000,
 		"thumbnail": [
-			"asdasdasd"
+			"C:\\fakepath\\computadora.jpeg"
 		],
-		"code": "asdasdasd",
+		"code": "asdads",
+		"stock": 10,
+		"available": true
+	},
+	{
+		"id": 2,
+		"category": "asdasdasd",
+		"title": "adasddsad",
+		"description": "dasdsada",
+		"price": 1000,
+		"thumbnail": [
+			"C:\\fakepath\\rocco.jpeg"
+		],
+		"code": "asadads",
+		"stock": 10,
+		"available": true
+	},
+	{
+		"id": 3,
+		"category": "asdasdads",
+		"title": "asdasdad",
+		"description": "dsadadada",
+		"price": 1000,
+		"thumbnail": [
+			"C:\\fakepath\\computadora.jpeg"
+		],
+		"code": "dasdasdad",
 		"stock": 10,
 		"available": true
 	}
