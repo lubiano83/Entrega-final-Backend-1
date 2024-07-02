@@ -25,7 +25,7 @@ ROUTER.get("/", async (req, res) => {
 
 ROUTER.get("/:id", async (req, res) => {
     try {
-        const ID = Number(req.params.id);
+        const ID = req.params.id;
         res.status(200).send(await CART.getCartById(ID));
     } catch (error) {
         console.log(error.message);
@@ -35,7 +35,7 @@ ROUTER.get("/:id", async (req, res) => {
 
 ROUTER.delete("/:id", async (req, res) => {
     try {
-        const ID = Number(req.params.id);
+        const ID = req.params.id;
         return res.status(200).send(await CART.deleteCartById(ID));
     } catch (error) {
         console.log(error.message);
@@ -45,8 +45,8 @@ ROUTER.delete("/:id", async (req, res) => {
 
 ROUTER.post("/:cid/products/:pid", async (req, res) => {
     try {
-        const cartId = Number(req.params.cid);
-        const productId = Number(req.params.pid);
+        const cartId = req.params.cid;
+        const productId = req.params.pid;
         res.status(200).send(await CART.addProductToCart(cartId, productId));
     } catch (error) {
         console.log(error.message);

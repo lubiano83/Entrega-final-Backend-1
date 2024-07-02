@@ -50,10 +50,14 @@ ROUTER.delete("/:id", async (req, res) => {
 
 ROUTER.put("/:id", async (req, res) => {
     try {
-        const id = (req.params.id);
+        const ID = req.params.id;
         const { category, title, description, price, thumbnail, code, stock, available } = req.body;
-        const productUpated = await PRODUCT.updateProduct({ id, category, title, description, thumbnail, price, code, stock, available });
-        res.status(200).json({ status: true, payload: productUpated });
+        const updateData = { category, title, description, price, thumbnail, code, stock, available };
+        const productUpdated = await PRODUCT.updateProduct( ID, updateData );
+        if (!productUpdated) {
+            return res.status(404).json({ status: false, message: "Producto no encontrado" });
+        }
+        res.status(200).json({ status: true, payload: productUpdated });
     } catch (error) {
         console.log(error.message);
         res.status(500).json({ status: false, message: "Hubo un error en el servidor" })

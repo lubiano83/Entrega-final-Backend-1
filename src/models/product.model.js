@@ -11,12 +11,5 @@ const productSchema = new Schema({
     available: { type: Boolean, default: true },
 });
 
-productSchema.set('toJSON', {
-    transform: function(doc, ret) {
-        delete ret.__v;
-        return ret;
-    }
-});
-
 const ProductModel = model("products", productSchema);
 export default ProductModel;

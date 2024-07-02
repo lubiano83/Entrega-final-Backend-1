@@ -1,6 +1,6 @@
-import { connect, Types } from "mongoose";
+import mongoose, { connect, Types } from "mongoose";
 
-const connectDB = () => {
+const connectDB = async () => {
     const URI = "mongodb+srv://lubiano83:OdGteJUhwyj5SJ4H@lubiano83.egrhqkm.mongodb.net/?retryWrites=true&w=majority&appName=lubiano83";
 
     const options = {
@@ -8,9 +8,13 @@ const connectDB = () => {
         useUnifiedTopology: true,
         dbName: "backend-1",
     };
-    connect(URI, options)
-        .then(() => { console.log("Conectado a la base de datos") })
-        .catch((error) => { console.log("Error al conectar a la base de datos", error) });
+
+    try {
+        await connect(URI, options);
+        console.log("Conectado a la base de datos");
+    } catch (error) {
+        console.error("Error al conectar a la base de datos", error);
+    }
 };
 
 const isValidId = (id) => {
