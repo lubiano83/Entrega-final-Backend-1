@@ -2,12 +2,39 @@ import ProductModel from "../models/product.model.js";
 import mongoDB from "../config/mongoose.config.js";
 
 export default class ProductManager {
-    #productModel;
+    #itemModel;
 
     // Constructor
     constructor() {
-        this.#productModel = ProductModel;
+        this.#itemModel = ProductModel;
     }
+
+    // Funciones privadas
+    #readItems = async () => {
+        try {
+            const items = await this.#itemModel.find().lean();
+            return items;
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    #escribirArchivo = async (datos) => {
+        try {
+            return await datos.save();
+        } catch (error) {
+            console.log(error.message);
+        }    
+    };
+
+    #identifyId = async (id) => {
+        try {
+            const itemId = await this.#itemModel.findById(id);
+            return itemId;
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
 
     // Funciones públicas
     addProduct = async ({ category, title, description, price, thumbnail = [], code, stock, available }) => {
@@ -16,7 +43,7 @@ export default class ProductManager {
             console.log("Todos los campos son obligatorios");
         }
         try {
-            const product = new this.#productModel ({
+            const product = new this.#itemModel ({
                 category,
                 title,
                 description,
@@ -26,7 +53,7 @@ export default class ProductManager {
                 stock,
                 available: available !== undefined ? available : true,
             });
-            await product.save();
+            await this.#escribirArchivo(product);
             return "Producto agregado correctamente";
         } catch (error) {
             console.log(error.message);
@@ -38,7 +65,7 @@ export default class ProductManager {
             return null;
         }
         try {
-            const product = await this.#productModel.findById(id);
+            const product = await this.#identifyId(id);
             return product;
         } catch (error) {
             console.log(error.message);
@@ -50,7 +77,7 @@ export default class ProductManager {
             return null;
         }
         try {
-            await this.#productModel.findByIdAndDelete(id);
+            await this.#itemModel.findByIdAndDelete(id);
             return "Producto Eliminado";
         } catch (error) {
             console.log(error,message);
@@ -62,7 +89,7 @@ export default class ProductManager {
             return null;
         }
         try {
-            const updatedProduct = await this.#productModel.findByIdAndUpdate(id, updateData, { new: true });
+            const updatedProduct = await this.#itemModel.findByIdAndUpdate(id, updateData, { new: true });
             if (updatedProduct) {
                 return "Producto Modificado";
             } else {
@@ -78,10 +105,10 @@ export default class ProductManager {
             return null;
         }
         try {
-            const product = await this.#productModel.findById(id);
+            const product = await this.#identifyId(id);
             if (product) {
                 product.available = !product.available;
-                await product.save();
+                await this.#escribirArchivo(product);
                 return product;
             } else {
                 return "Producto no encontrado";
@@ -93,8 +120,7 @@ export default class ProductManager {
 
     getProducts = async () => {
         try {
-            const products = await this.#productModel.find().lean();
-            return products;
+            return await this.#readItems();
         } catch (error) {
             console.log(error.message);
         }

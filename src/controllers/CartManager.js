@@ -5,18 +5,18 @@ import mongoDB from "../config/mongoose.config.js";
 const PRODUCT = new ProductManager();
 
 export default class CartManager {
-    #cartModel;
+    #itemModel;
 
     // Constructor
     constructor() {
-        this.#cartModel = CartModel;
+        this.#itemModel = CartModel;
     }
 
     // Funciones privadas
-    #readCarts = async () => {
+    #readItems = async () => {
         try {
-            const carts = await this.#cartModel.find().lean();
-            return carts;
+            const items = await this.#itemModel.find().lean();
+            return items;
         } catch (error) {
             console.log(error.message);
         }
@@ -31,14 +31,18 @@ export default class CartManager {
     };
 
     #identifyId = async (id) => {
-        const cartId = await this.#cartModel.findById(id);
-        return cartId;
+        try {
+            const itemId = await this.#itemModel.findById(id);
+            return itemId;
+        } catch (error) {
+            console.log(error.message);
+        }
     };
 
     // Funciones públicas
     addCart = async () => {
         try {
-            const cart = new this.#cartModel({ products: [] });
+            const cart = new this.#itemModel({ products: [] });
             await this.#escribirArchivo(cart)
             return "Carrito Agregado";
         } catch (error) {
@@ -94,8 +98,7 @@ export default class CartManager {
             return "ID no válido";
         }
         try {
-            let carts = await this.#cartModel.findByIdAndDelete(id);
-            await this.#escribirArchivo(carts);
+            let carts = await this.#itemModel.findByIdAndDelete(id);
             return "Carrito Eliminado";
         } catch (error) {
             console.log(error.message);
@@ -104,7 +107,7 @@ export default class CartManager {
 
     getCarts = async () => {
         try {
-            return await this.#readCarts();
+            return await this.#readItems();
         } catch (error) {
             console.log(error.message);
         }
