@@ -72,10 +72,11 @@ export default class CartManager {
             if (!product) {
                 return "Producto no encontrado";
             }
-            const productInCart = cart.products.find(product => product.id === productId);
-            console.log(productInCart); // undefined
+            const carts = await this.#readItems();
+            const productInCart = carts.find(product => product.id === productId);
+            console.log(productInCart);
             if(productInCart){
-                productInCart.quantity++;
+                productInCart.quantity += 1;
                 await this.#escribirArchivo(cart)
                 return "Cantidad Incrementada";
             } else {

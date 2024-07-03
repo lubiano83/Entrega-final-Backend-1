@@ -42,6 +42,7 @@ export default class ProductManager {
         if (!category || !title || !description || !price || !code || !stock) {
             console.log("Todos los campos son obligatorios");
         }
+        const products = await this.#readItems();
         try {
             const product = new this.#itemModel ({
                 category,
@@ -53,10 +54,15 @@ export default class ProductManager {
                 stock,
                 available: available !== undefined ? available : true,
             });
+            const sameCode = products.find((product) => product.code === code);
+            if (sameCode){
+                return "El codigo ya existe";
+            }
             await this.#escribirArchivo(product);
             return "Producto agregado correctamente";
         } catch (error) {
             console.log(error.message);
+            return "Hubo un error al agregar el producto";
         }
     };
 
