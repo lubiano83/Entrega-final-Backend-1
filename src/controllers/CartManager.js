@@ -72,16 +72,17 @@ export default class CartManager {
             if (!product) {
                 return "Producto no encontrado";
             }
-
-            const productIndex = cart.products.findIndex((p) => p.productId === productId);
-            console.log(productIndex);
-            if (productIndex === -1) {
-                cart.products.push({ productId, quantity: 1 });
+            const productInCart = cart.products.find(product => product.id === productId);
+            console.log(productInCart); // undefined
+            if(productInCart){
+                productInCart.quantity++;
+                await this.#escribirArchivo(cart)
+                return "Cantidad Incrementada";
             } else {
-                cart.products[productIndex].quantity += 1;
+                cart.products.push({ productId, quantity: 1 });
+                await this.#escribirArchivo(cart)
+                return "Producto Agregado";
             }
-            await this.#escribirArchivo(cart)
-            return "Producto Agregado o Cantidad Incrementada";
         } catch (error) {
             console.log(error.message);
             return "Error al agregar el producto al carrito";
