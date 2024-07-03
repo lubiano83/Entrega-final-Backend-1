@@ -31,12 +31,8 @@ export default class CartManager {
     };
 
     #identifyId = async (id) => {
-        try {
-            const itemId = await this.#itemModel.findById(id);
-            return itemId;
-        } catch (error) {
-            console.log(error.message);
-        }
+        const itemId = await this.#itemModel.findById(id);
+        return itemId;
     };
 
     // Funciones públicas

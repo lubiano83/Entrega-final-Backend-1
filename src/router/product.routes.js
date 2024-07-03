@@ -4,7 +4,6 @@ import ProductManager from "../controllers/ProductManager.js";
 const ROUTER = Router();
 const PRODUCT = new ProductManager();
 
-// Product Manager
 ROUTER.post("/", async (req, res) => {
     try {
         const { category, title, description, price, thumbnail, code, stock } = req.body;
@@ -18,7 +17,7 @@ ROUTER.post("/", async (req, res) => {
 
 ROUTER.get("/", async (req, res) => {
     try {
-        const products = await PRODUCT.getProducts(req.query);
+        const products = await PRODUCT.getProducts();
         res.status(200).json({ status: true, payload: products });
     } catch (error) {
         console.log(error.message);

@@ -18,7 +18,11 @@ ROUTER.get("/", async (req, res) => {
 });
 
 ROUTER.get("/realtimeproducts", async (req, res) => {
-    return res.status(200).render("realTimeProducts", { title: "realTimeProducts" });
+    try {
+        return res.status(200).render("realTimeProducts", { title: "realTimeProducts" });
+    } catch (error) {
+        console.log(error.message);
+    }
 });
 
 // ROUTER.post("/realtimeproducts", uploader.single("file"), async (req, res) => {

@@ -4,7 +4,6 @@ import CartManager from "../controllers/CartManager.js";
 const ROUTER = Router();
 const CART = new CartManager();
 
-// Cart Manager
 ROUTER.post("/", async (req, res) => {
     try {
         res.status(201).send(await CART.addCart());
