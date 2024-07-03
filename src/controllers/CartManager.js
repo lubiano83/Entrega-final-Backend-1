@@ -12,14 +12,37 @@ export default class CartManager {
         this.#cartModel = CartModel;
     }
 
+    // Funciones privadas
+    #readCarts = async () => {
+        try {
+            const carts = await this.#cartModel.find().lean();
+            return carts;
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
+    #escribirArchivo = async (datos) => {
+        try {
+            return await datos.save();
+        } catch (error) {
+            console.log(error.message);
+        }    
+    };
+
+    #identifyId = async (id) => {
+        const cartId = await this.#cartModel.findById(id);
+        return cartId;
+    };
+
     // Funciones públicas
     addCart = async () => {
         try {
             const cart = new this.#cartModel({ products: [] });
-            await cart.save();
+            await this.#escribirArchivo(cart)
             return "Carrito Agregado";
         } catch (error) {
-            console.log("Error al agregar Carrito:", error.message);
+            console.log(error.message);
         }
     };
 
@@ -27,15 +50,11 @@ export default class CartManager {
         if (!mongoDB.isValidId(id)) {
             return "ID no válido";
         }
-        try {
-            const cart = await this.#cartModel.findById(id).populate("products.productId");
-            if (!cart) {
-                return "Not found";
-            } else {
-                return cart;
-            }
-        } catch (error) {
-            console.log(error.message);
+        const respuesta = await this.#identifyId(id);
+        if(!respuesta){
+            return "Not found";
+        } else {
+            return respuesta;
         }
     };
 
@@ -44,7 +63,7 @@ export default class CartManager {
             return "ID no válido";
         }
         try {
-            const cart = await this.#cartModel.findById(cartId);
+            const cart = await this.#identifyId(cartId);
             const product = await PRODUCT.getProductById(productId);
 
             if (!cart) {
@@ -55,15 +74,17 @@ export default class CartManager {
             }
 
             const productIndex = cart.products.findIndex((p) => p.productId === productId);
+            console.log(productIndex);
             if (productIndex === -1) {
                 cart.products.push({ productId, quantity: 1 });
             } else {
                 cart.products[productIndex].quantity += 1;
             }
-            await cart.save();
+            await this.#escribirArchivo(cart)
             return "Producto Agregado o Cantidad Incrementada";
         } catch (error) {
-            console.log("Error al agregar producto al carrito:", error.message);
+            console.log(error.message);
+            return "Error al agregar el producto al carrito";
         }
     };
 
@@ -72,7 +93,8 @@ export default class CartManager {
             return "ID no válido";
         }
         try {
-            await this.#cartModel.findByIdAndDelete(id);
+            let carts = await this.#cartModel.findByIdAndDelete(id);
+            await this.#escribirArchivo(carts);
             return "Carrito Eliminado";
         } catch (error) {
             console.log(error.message);
@@ -81,8 +103,7 @@ export default class CartManager {
 
     getCarts = async () => {
         try {
-            const carts = await this.#cartModel.find().lean();
-            return carts;
+            return await this.#readCarts();
         } catch (error) {
             console.log(error.message);
         }
