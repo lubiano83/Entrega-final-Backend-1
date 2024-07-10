@@ -12,7 +12,7 @@ export default class ProductManager {
     // Funciones privadas
     #readItems = async (limit, skip) => {
         try {
-            const items = await this.#itemModel.find({ category: "BATERIA" }).limit(limit).skip(skip).lean();
+            const items = await this.#itemModel.find().limit(limit).skip(skip).lean();
             return items;
         } catch (error) {
             console.log(error.message);
