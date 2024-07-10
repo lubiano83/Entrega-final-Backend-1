@@ -1,5 +1,6 @@
 import { Router } from "express";
 import ProductManager from "../controllers/ProductManager.js";
+import ProductModel from "../models/product.model.js";
 // import uploader from "../utils/uploader.js";
 
 const ROUTER = Router();
@@ -14,6 +15,18 @@ ROUTER.get("/", async (req, res) => {
         });
     } catch (error) {
         res.status(500).send(error.message);
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" });
+    }
+});
+
+ROUTER.get("/explain", async (req, res) => {
+    try {
+        const result = await ProductModel.find({ $and: [{ category: "BATERIA" }, { title: "55457" }] }).explain();
+        console.log(result.executionStats);
+        res.status(200).json({ status: true, payload: result.executionStats });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" });
     }
 });
 
@@ -22,6 +35,7 @@ ROUTER.get("/realtimeproducts", async (req, res) => {
         return res.status(200).render("realTimeProducts", { title: "realTimeProducts" });
     } catch (error) {
         console.log(error.message);
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" });
     }
 });
 

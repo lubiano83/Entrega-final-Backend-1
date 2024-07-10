@@ -1,5 +1,6 @@
 import { Router } from "express";
 import ProductManager from "../controllers/ProductManager.js";
+import ProductModel from "../models/product.model.js";
 
 const ROUTER = Router();
 const PRODUCT = new ProductManager();
@@ -11,19 +12,37 @@ ROUTER.post("/", async (req, res) => {
         res.status(201).json({ status: true, payload: product });
     } catch (error) {
         console.log(error.message);
-        res.status(500).json({ status: false, message: "Hubo un error en el servidor" })
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" });
     }
 });
 
 ROUTER.get("/", async (req, res) => {
     try {
-        const { limit } = req.query;
+        const { limit, page } = req.query;
         const limitNumber = limit ? Number(limit) : 10;
-        const products = await PRODUCT.getProducts(limitNumber);
-        res.status(200).json({ status: true, payload: products });
+        const pageNumber = page ? Number(page) : 1;
+        const skip = (pageNumber - 1) * limitNumber;
+        const totalProducts = await PRODUCT.countProducts();
+        const totalPages = Math.ceil(totalProducts / limitNumber);
+        const products = await PRODUCT.getProducts(limitNumber, skip);
+
+        const result = {
+            status: "success",
+            payload: products,
+            totalPages: totalPages,
+            prevPage: pageNumber > 1 ? pageNumber - 1 : null,
+            nextPage: pageNumber < totalPages ? pageNumber + 1 : null,
+            page: pageNumber,
+            hasNextPage: pageNumber < totalPages,
+            hasPrevPage: pageNumber > 1,
+            prevLink: pageNumber > 1 ? `?limit=${limitNumber}&page=${pageNumber - 1}` : null,
+            nextLink: pageNumber < totalPages ? `?limit=${limitNumber}&page=${pageNumber + 1}` : null
+        };
+
+        return res.status(200).json({ status: true, result: result });
     } catch (error) {
         console.log(error.message);
-        res.status(500).json({ status: false, message: "Hubo un error en el servidor" })
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" });
     }
 });
 
@@ -34,7 +53,7 @@ ROUTER.get("/:id", async (req, res) => {
         res.status(200).json({ status: true, payload: product });
     } catch (error) {
         console.log(error.message);
-        res.status(500).json({ status: false, message: "Hubo un error en el servidor" })
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" });
     }
 });
 
@@ -45,7 +64,7 @@ ROUTER.delete("/:id", async (req, res) => {
         res.status(200).json({ status: true, payload: product });
     } catch (error) {
         console.log(error.message);
-        res.status(500).json({ status: false, message: "Hubo un error en el servidor" })
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" });
     }
 });
 
@@ -61,7 +80,7 @@ ROUTER.put("/:id", async (req, res) => {
         res.status(200).json({ status: true, payload: productUpdated });
     } catch (error) {
         console.log(error.message);
-        res.status(500).json({ status: false, message: "Hubo un error en el servidor" })
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" });
     }
 });
 

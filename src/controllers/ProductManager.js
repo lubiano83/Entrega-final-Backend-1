@@ -10,9 +10,9 @@ export default class ProductManager {
     }
 
     // Funciones privadas
-    #readItems = async (limit) => {
+    #readItems = async (limit, skip) => {
         try {
-            const items = await this.#itemModel.find().limit(limit).lean();
+            const items = await this.#itemModel.find({ category: "BATERIA" }).limit(limit).skip(skip).lean();
             return items;
         } catch (error) {
             console.log(error.message);
@@ -33,6 +33,15 @@ export default class ProductManager {
             return itemId;
         } catch (error) {
             console.log(error.message);
+        }
+    };
+
+    countProducts = async () => {
+        try {
+            return await ProductModel.countDocuments();
+        } catch (error) {
+            console.log(error.message);
+            return "Hubo un error al contar los productos";
         }
     };
 
@@ -124,9 +133,9 @@ export default class ProductManager {
         }
     };
 
-    getProducts = async (limit) => {
+    getProducts = async (limit, skip) => {
         try {
-            return await this.#readItems(limit);
+            return await this.#readItems(limit, skip);
         } catch (error) {
             console.log(error.message);
         }
