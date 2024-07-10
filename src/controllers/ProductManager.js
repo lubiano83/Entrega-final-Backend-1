@@ -10,9 +10,9 @@ export default class ProductManager {
     }
 
     // Funciones privadas
-    #readItems = async (limit, skip) => {
+    #readItems = async (limit, skip, sort) => {
         try {
-            const items = await this.#itemModel.find().limit(limit).skip(skip).lean();
+            const items = await this.#itemModel.find().limit(limit).skip(skip).sort(sort).lean();
             return items;
         } catch (error) {
             console.log(error.message);
@@ -36,6 +36,7 @@ export default class ProductManager {
         }
     };
 
+    // Funciones públicas
     countProducts = async () => {
         try {
             return await ProductModel.countDocuments();
@@ -45,7 +46,6 @@ export default class ProductManager {
         }
     };
 
-    // Funciones públicas
     addProduct = async ({ category, title, description, price, thumbnail = [], code, stock, available }) => {
 
         if (!category || !title || !description || !price || !code || !stock) {
@@ -133,9 +133,9 @@ export default class ProductManager {
         }
     };
 
-    getProducts = async (limit, skip) => {
+    getProducts = async (limit, skip, sort) => {
         try {
-            return await this.#readItems(limit, skip);
+            return await this.#readItems(limit, skip, sort);
         } catch (error) {
             console.log(error.message);
         }

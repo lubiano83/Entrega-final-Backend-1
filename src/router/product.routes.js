@@ -18,13 +18,20 @@ ROUTER.post("/", async (req, res) => {
 
 ROUTER.get("/", async (req, res) => {
     try {
-        const { limit, page } = req.query;
+        const { limit, page, sort } = req.query;
         const limitNumber = limit ? Number(limit) : 10;
         const pageNumber = page ? Number(page) : 1;
         const skip = (pageNumber - 1) * limitNumber;
         const totalProducts = await PRODUCT.countProducts();
         const totalPages = Math.ceil(totalProducts / limitNumber);
-        const products = await PRODUCT.getProducts(limitNumber, skip);
+        
+        let sortOptions = {};
+        if (sort) {
+            const [field, order] = sort.split(":");
+            sortOptions[field] = order === '1' ? 1 : -1;
+        }
+
+        const products = await PRODUCT.getProducts(limitNumber, skip, sortOptions);
 
         const result = {
             status: "success",
@@ -35,8 +42,8 @@ ROUTER.get("/", async (req, res) => {
             page: pageNumber,
             hasNextPage: pageNumber < totalPages,
             hasPrevPage: pageNumber > 1,
-            prevLink: pageNumber > 1 ? `?limit=${limitNumber}&page=${pageNumber - 1}` : null,
-            nextLink: pageNumber < totalPages ? `?limit=${limitNumber}&page=${pageNumber + 1}` : null
+            prevLink: pageNumber > 1 ? `/api/products?limit=${limitNumber}&page=${pageNumber - 1}` : null,
+            nextLink: pageNumber < totalPages ? `/api/products?limit=${limitNumber}&page=${pageNumber + 1}` : null
         };
 
         return res.status(200).json({ status: true, result: result });
