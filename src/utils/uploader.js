@@ -1,5 +1,5 @@
 import multer from "multer";
-import path from "../utils/paths.js";
+import path from "../utils/path.js";
 import moment from "moment";
 
 const storage = multer.diskStorage({

@@ -9,14 +9,7 @@ const productSchema = new Schema({
     code: { type: String, required: true, lowercase: true, unique: true, trim: true },
     stock: { type: Number, required: true },
     available: { type: Boolean, default: true },
-});
-
-productSchema.set("toJSON", {
-    transform: function(doc, ret){
-        delete ret.__v;
-        return ret;
-    }
-});
+}, {__v: false});
 
 const ProductModel = model("products", productSchema);
 export default ProductModel;

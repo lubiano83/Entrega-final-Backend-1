@@ -17,7 +17,9 @@ ROUTER.post("/", async (req, res) => {
 
 ROUTER.get("/", async (req, res) => {
     try {
-        const products = await PRODUCT.getProducts();
+        const { limit } = req.query;
+        const limitNumber = limit ? Number(limit) : 10;
+        const products = await PRODUCT.getProducts(limitNumber);
         res.status(200).json({ status: true, payload: products });
     } catch (error) {
         console.log(error.message);

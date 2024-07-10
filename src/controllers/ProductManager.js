@@ -10,9 +10,9 @@ export default class ProductManager {
     }
 
     // Funciones privadas
-    #readItems = async () => {
+    #readItems = async (limit) => {
         try {
-            const items = await this.#itemModel.find().lean();
+            const items = await this.#itemModel.find().limit(limit).lean();
             return items;
         } catch (error) {
             console.log(error.message);
@@ -124,9 +124,9 @@ export default class ProductManager {
         }
     };
 
-    getProducts = async () => {
+    getProducts = async (limit) => {
         try {
-            return await this.#readItems();
+            return await this.#readItems(limit);
         } catch (error) {
             console.log(error.message);
         }
