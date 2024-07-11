@@ -12,7 +12,7 @@ export default class ProductManager {
     // Funciones privadas
     #readItems = async (limit, skip, sort, filter) => {
         try {
-            const items = await this.#itemModel.find(filter).limit(limit).skip(skip).sort(sort).lean();
+            const items = await this.#itemModel.find({ $and: {filter} }).limit(limit).skip(skip).sort(sort).lean();
             return items;
         } catch (error) {
             console.log(error.message);

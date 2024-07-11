@@ -31,7 +31,7 @@ ROUTER.get("/", async (req, res) => {
             sortOptions[field] = order === '1' ? 1 : -1;
         }
 
-        let filters = {};
+        let filters = [{}];
         if (filter) {
             const filterPairs = filter.split(",");
             filterPairs.forEach(pair => {
