@@ -24,6 +24,15 @@ ROUTER.get("/realtimeproducts", async (req, res) => {
     }
 });
 
+ROUTER.get("/", async (req, res) => {
+    try {
+        return res.status(200).render("home", { title: "Home" });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ status: false, message: "Hubo un error en el servidor" });
+    }
+});
+
 // ROUTER.post("/realtimeproducts", uploader.single("file"), async (req, res) => {
 //     const { file } = req;
 
