@@ -16,6 +16,7 @@ export default class ProductManager {
             return items;
         } catch (error) {
             console.log(error.message);
+            return "Hubo un error al leer el archivo";
         }
     };
 
@@ -24,6 +25,7 @@ export default class ProductManager {
             return await datos.save();
         } catch (error) {
             console.log(error.message);
+            return "Hubo un error al escribir el archivo";
         }    
     };
 
@@ -33,6 +35,7 @@ export default class ProductManager {
             return itemId;
         } catch (error) {
             console.log(error.message);
+            return "Hubo un error al identificar el producto";
         }
     };
 
@@ -84,6 +87,7 @@ export default class ProductManager {
             return product;
         } catch (error) {
             console.log(error.message);
+            return "Hubo un error al obtener el producto";
         }
     };
 
@@ -96,6 +100,7 @@ export default class ProductManager {
             return "Producto Eliminado";
         } catch (error) {
             console.log(error,message);
+            return "Hubo un error al eliminar el producto";
         }
     };
 
@@ -112,6 +117,7 @@ export default class ProductManager {
             }
         } catch (error) {
             console.log(error.message);
+            return "Hubo un error al actualizar el producto";
         }
     };
 
@@ -130,6 +136,7 @@ export default class ProductManager {
             }
         } catch (error) {
             console.log(error.message);
+            return "Hubo un error al cambiar la disponibilidad del producto";
         }
     };
 
@@ -138,6 +145,7 @@ export default class ProductManager {
             return await this.#readItems(limit, skip, sort, filter);
         } catch (error) {
             console.log(error.message);
+            return "Hubo un error al obtener los productos";
         }
     };
 }

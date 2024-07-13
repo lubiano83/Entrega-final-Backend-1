@@ -19,6 +19,7 @@ export default class CartManager {
             return items;
         } catch (error) {
             console.log(error.message);
+            return "Hubo un error al leer el archivo";
         }
     };
 
@@ -27,12 +28,18 @@ export default class CartManager {
             return await datos.save();
         } catch (error) {
             console.log(error.message);
+            return "Hubo un error al escribir el archivo";
         }    
     };
 
     #identifyId = async (id) => {
-        const itemId = await this.#itemModel.findById(id);
-        return itemId;
+        try {
+            const itemId = await this.#itemModel.findById(id);
+            return itemId;
+        } catch (error) {
+            console.log(error.message);
+            return "Hubo un error al identificar el carrito";
+        }
     };
 
     // Funciones públicas
@@ -43,6 +50,7 @@ export default class CartManager {
             return "Carrito Agregado";
         } catch (error) {
             console.log(error.message);
+            return "Hubo un error al agregar el carrito";
         }
     };
 
@@ -50,11 +58,16 @@ export default class CartManager {
         if (!mongoDB.isValidId(id)) {
             return "ID no válido";
         }
-        const respuesta = await this.#identifyId(id);
-        if(!respuesta){
-            return "Not found";
-        } else {
-            return respuesta;
+        try {
+            const respuesta = await this.#identifyId(id);
+            if(!respuesta){
+                return "Not found";
+            } else {
+                return respuesta;
+            }
+        } catch (error) {
+            console.log(error.message);
+            return "Hubo un error al obtener el carrito";
         }
     };
 
@@ -191,6 +204,7 @@ export default class CartManager {
             return await this.#readItems();
         } catch (error) {
             console.log(error.message);
+            return "Hubo un error al obtener los carritos";
         }
     };
 }
