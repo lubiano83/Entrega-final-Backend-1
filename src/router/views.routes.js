@@ -1,6 +1,5 @@
 import { Router } from "express";
 import ProductModel from "../models/product.model.js";
-// import uploader from "../utils/uploader.js";
 
 const ROUTER = Router();
 
@@ -32,24 +31,5 @@ ROUTER.get("/", async (req, res) => {
         res.status(500).json({ status: false, message: "Hubo un error en el servidor" });
     }
 });
-
-// ROUTER.post("/realtimeproducts", uploader.single("file"), async (req, res) => {
-//     const { file } = req;
-
-//     if (!file) {
-//         res.status(400).send({ state: "error", message: "file is required" });
-//         return;
-//     }
-
-//     const filename = file.filename;
-//     const { category, title, description, price, code, stock } = req.body;
-
-//     try {
-//         const newProduct = await PRODUCT.addProduct(category, title, description, price, filename, code, stock);
-//         res.status(200).send(newProduct);
-//     } catch (error) {
-//         res.status(500).send({ state: "error", message: error.message });
-//     }
-// });
 
 export default ROUTER;
