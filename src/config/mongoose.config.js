@@ -1,4 +1,4 @@
-import mongoose, { connect, Types } from "mongoose";
+import { connect, Types } from "mongoose";
 
 const connectDB = async () => {
     const URI = "mongodb+srv://lubiano83:OdGteJUhwyj5SJ4H@lubiano83.egrhqkm.mongodb.net/?retryWrites=true&w=majority&appName=lubiano83";

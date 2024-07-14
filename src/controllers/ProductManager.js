@@ -10,7 +10,7 @@ export default class ProductManager {
     }
 
     // Funciones privadas
-    #readItems = async (filter, limit, skip, sort) => {
+    #readItems = async (limit, skip, sort, filter) => {
         try {
             const items = await this.#itemModel.find(filter).limit(limit).skip(skip).sort(sort).lean();
             return items;
