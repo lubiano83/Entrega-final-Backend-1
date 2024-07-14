@@ -23,18 +23,18 @@ ROUTER.get("/", async (req, res) => {
         const skip = (pageNumber - 1) * limitNumber;
         const totalProducts = await PRODUCT.countProducts();
         const totalPages = Math.ceil(totalProducts / limitNumber);
-        
-        let sortOptions = {};
+
+        const sortOptions = {};
         if (sort) {
-            const [field, order] = sort.split(":");
-            sortOptions[field] = order === '1' ? 1 : -1;
+            const [ field, order ] = sort.split(":");
+            sortOptions[field] = order === "1" ? 1 : -1;
         }
 
-        let filters = {};
+        const filters = {};
         if (filter) {
             const filterPairs = filter.split(",");
-            filterPairs.forEach(pair => {
-                const [key, value] = pair.split(":");
+            filterPairs.forEach((pair) => {
+                const [ key, value ] = pair.split(":");
                 filters[key] = value;
             });
         }
@@ -51,7 +51,7 @@ ROUTER.get("/", async (req, res) => {
             hasNextPage: pageNumber < totalPages,
             hasPrevPage: pageNumber > 1,
             prevLink: pageNumber > 1 ? `/api/products?limit=${limitNumber}&page=${pageNumber - 1}&sort=${sort}&filter=${filter}` : null,
-            nextLink: pageNumber < totalPages ? `/api/products?limit=${limitNumber}&page=${pageNumber + 1}&sort=${sort}&filter=${filter}` : null
+            nextLink: pageNumber < totalPages ? `/api/products?limit=${limitNumber}&page=${pageNumber + 1}&sort=${sort}&filter=${filter}` : null,
         };
 
         return res.status(200).json({ result });
@@ -103,7 +103,7 @@ ROUTER.put("/available/:id", async (req, res) => {
     try {
         const ID = req.params.id;
         const RESULT = await PRODUCT.toggleAvailability(ID);
-        
+
         if (RESULT === "Producto no encontrado") {
             return res.status(404).json({ status: false, message: RESULT });
         }

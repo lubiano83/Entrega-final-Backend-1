@@ -10,7 +10,7 @@ export default class ProductManager {
     }
 
     // Funciones privadas
-    #readItems = async (limit, skip, sort, filter) => {
+    #readItems = async (filter, limit, skip, sort) => {
         try {
             const items = await this.#itemModel.find(filter).limit(limit).skip(skip).sort(sort).lean();
             return items;
@@ -26,7 +26,7 @@ export default class ProductManager {
         } catch (error) {
             console.log(error.message);
             return "Hubo un error al escribir el archivo";
-        }    
+        }
     };
 
     #identifyId = async (id) => {
@@ -56,7 +56,7 @@ export default class ProductManager {
         }
         const products = await this.#readItems();
         try {
-            const product = new this.#itemModel ({
+            const product = new this.#itemModel({
                 category,
                 title,
                 description,
@@ -99,7 +99,7 @@ export default class ProductManager {
             await this.#itemModel.findByIdAndDelete(id);
             return "Producto Eliminado";
         } catch (error) {
-            console.log(error,message);
+            console.log(error.message);
             return "Hubo un error al eliminar el producto";
         }
     };

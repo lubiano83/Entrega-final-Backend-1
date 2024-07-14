@@ -29,7 +29,7 @@ export default class CartManager {
         } catch (error) {
             console.log(error.message);
             return "Hubo un error al escribir el archivo";
-        }    
+        }
     };
 
     #identifyId = async (id) => {
@@ -46,7 +46,7 @@ export default class CartManager {
     addCart = async () => {
         try {
             const cart = new this.#itemModel({ products: [] });
-            await this.#escribirArchivo(cart)
+            await this.#escribirArchivo(cart);
             return "Carrito Agregado";
         } catch (error) {
             console.log(error.message);
@@ -86,7 +86,7 @@ export default class CartManager {
                 return "Producto no encontrado";
             }
 
-            const productInCart = cart.products.find(p => p.id.toString() === productId.toString());
+            const productInCart = cart.products.find((p) => p.id.toString() === productId.toString());
             console.log("Producto en carrito:", productInCart);
 
             if (productInCart) {
@@ -108,16 +108,16 @@ export default class CartManager {
         if (!mongoDB.isValidId(cartId) || !mongoDB.isValidId(productId)) {
             return "ID no válido";
         }
-    
+
         try {
             const cart = await this.#identifyId(cartId);
-    
+
             if (!cart) {
                 return "Carrito no encontrado";
             }
-    
-            const productIndex = cart.products.findIndex(p => p.id.toString() === productId.toString());
-    
+
+            const productIndex = cart.products.findIndex((p) => p.id.toString() === productId.toString());
+
             if (productIndex !== -1) {
                 cart.products.splice(productIndex, 1);
                 await this.#escribirArchivo(cart);
@@ -125,7 +125,7 @@ export default class CartManager {
             } else {
                 return "Producto no encontrado en el carrito";
             }
-    
+
         } catch (error) {
             console.log(error.message);
             return "Error al eliminar el producto del carrito";
@@ -136,16 +136,16 @@ export default class CartManager {
         if (!mongoDB.isValidId(cartId) || !mongoDB.isValidId(productId)) {
             return "ID no válido";
         }
-    
+
         try {
             const cart = await this.#identifyId(cartId);
-    
+
             if (!cart) {
                 return "Carrito no encontrado";
             }
-    
-            const productIndex = cart.products.findIndex(p => p.id.toString() === productId.toString());
-    
+
+            const productIndex = cart.products.findIndex((p) => p.id.toString() === productId.toString());
+
             if (productIndex !== -1) {
                 cart.products[productIndex].quantity = quantity;
                 console.log(quantity);
@@ -154,7 +154,7 @@ export default class CartManager {
             } else {
                 return "Producto no encontrado en el carrito";
             }
-    
+
         } catch (error) {
             console.log(error.message);
             return "Error al modificar la cantidad del producto en el carrito";
@@ -165,14 +165,14 @@ export default class CartManager {
         if (!mongoDB.isValidId(id)) {
             return "ID no válido";
         }
-    
+
         try {
             const cart = await this.#identifyId(id);
-    
+
             if (!cart) {
                 return "Carrito no encontrado";
             }
-    
+
             cart.products = []; // Vaciar la lista de productos
             await this.#escribirArchivo(cart); // Guardar los cambios
             return "Todos los productos han sido eliminados del carrito";
@@ -189,13 +189,13 @@ export default class CartManager {
         try {
             const updatedCart = await this.#itemModel.findByIdAndUpdate(id, updateData, { new: true });
             if (updatedCart) {
-                return updatedCart;  // Devuelve el carrito actualizado en lugar de un mensaje de texto
+                return updatedCart; // Devuelve el carrito actualizado en lugar de un mensaje de texto
             } else {
-                return null;  // Devuelve null si no se encontró el carrito
+                return null; // Devuelve null si no se encontró el carrito
             }
         } catch (error) {
             console.log(error.message);
-            return "Error al actualizar el carrito";  // Lanza un error si algo sale mal
+            return "Error al actualizar el carrito"; // Lanza un error si algo sale mal
         }
     };
 
