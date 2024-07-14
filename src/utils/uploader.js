@@ -12,8 +12,8 @@ const storage = multer.diskStorage({
         const extension = file.originalname.slice(file.originalname.lastIndexOf("."));
         const filename = `file_${randomNumber}_${dateTime}${extension}`;
         cb(null, filename);
-    }
+    },
 });
 
-const uploader = multer({storage});
+const uploader = multer({ storage });
 export default uploader;

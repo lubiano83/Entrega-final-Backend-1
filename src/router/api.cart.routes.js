@@ -61,12 +61,12 @@ ROUTER.put("/:cid/products/:pid", async (req, res) => {
         const { quantity } = req.body;
 
         // Validar que la cantidad sea un número
-        if (typeof quantity !== 'number') {
+        if (typeof quantity !== "number") {
             return res.status(400).json({ status: false, message: "Cantidad inválida" });
         }
 
         const updateResult = await CART.updateCartQuantity(cartId, productId, quantity);
-        console.log('Resultado de la actualización:', updateResult);
+        console.log("Resultado de la actualización:", updateResult);
 
         if (updateResult === "Carrito no encontrado" || updateResult === "Producto no encontrado en el carrito" || updateResult === "ID no válido") {
             return res.status(404).json({ status: false, message: updateResult });
@@ -76,7 +76,7 @@ ROUTER.put("/:cid/products/:pid", async (req, res) => {
             res.status(200).json({ status: true, message: updateResult });
         }
     } catch (error) {
-        console.log('Error en el servidor:', error.message);
+        console.log("Error en el servidor:", error.message);
         res.status(500).json({ status: false, message: "Hubo un error en el servidor" });
     }
 });
@@ -85,7 +85,7 @@ ROUTER.delete("/:cid", async (req, res) => {
     try {
         const cartId = req.params.cid;
         const deleteResult = await CART.cleanCart(cartId);
-        console.log('Resultado de la eliminación:', deleteResult);
+        console.log("Resultado de la eliminación:", deleteResult);
 
         if (deleteResult === "Carrito no encontrado" || deleteResult === "ID no válido") {
             return res.status(404).json({ status: false, message: deleteResult });
@@ -95,7 +95,7 @@ ROUTER.delete("/:cid", async (req, res) => {
             res.status(200).json({ status: true, message: deleteResult });
         }
     } catch (error) {
-        console.log('Error en el servidor:', error.message);
+        console.log("Error en el servidor:", error.message);
         res.status(500).json({ status: false, message: "Hubo un error en el servidor" });
     }
 });
@@ -103,7 +103,7 @@ ROUTER.delete("/:cid", async (req, res) => {
 ROUTER.put("/:id", async (req, res) => {
     try {
         const ID = req.params.id;
-        const { products } = req.body;  // Ahora se espera que el cuerpo de la solicitud contenga un arreglo de productos
+        const { products } = req.body; // Ahora se espera que el cuerpo de la solicitud contenga un arreglo de productos
         const updateData = { products };
         const cartUpdated = await CART.updateCart(ID, updateData);
         if (!cartUpdated) {
