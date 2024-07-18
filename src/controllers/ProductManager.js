@@ -101,9 +101,36 @@ export default class ProductManager {
         }
     };
 
-    getProducts = async () => {
+    getProducts = async (paramFilters) => {
         try {
-            return await this.#itemModel.find().lean();
+            // return await this.#itemModel.find().lean();
+            const $and = [];
+
+            if (paramFilters?.category) $and.push({ category: paramFilters.category });
+            if (paramFilters?.title) $and.push({ title: paramFilters.title });
+            if (paramFilters?.code) $and.push({ code: paramFilters.code });
+            const filters = $and.length > 0 ? { $and } : {};
+
+            const sort = {
+                asc: { name: 1 },
+                desc: { name: -1 },
+            };
+
+            const paginationOptions = {
+                limit: paramFilters.limit ?? 10,
+                page: paramFilters.page ?? 1,
+                sort: sort[paramFilters?.sort] ?? {},
+                populate: "courses",
+                lean: true,
+            };
+
+            const productsFound = await this.#itemModel.paginate(
+                filters,
+                paginationOptions,
+            );
+
+            console.log(productsFound);
+            return productsFound;
         } catch (error) {
             console.log(error.message);
             return "Hubo un error al obtener los productos";
