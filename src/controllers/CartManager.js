@@ -12,11 +12,41 @@ export default class CartManager {
         this.#itemModel = CartModel;
     }
 
+    // Funciones privadas
+    #readItems = async () => {
+        try {
+            const items = await this.#itemModel.find().lean();
+            return items;
+        } catch (error) {
+            console.log(error.message);
+            return "Hubo un error al leer el archivo";
+        }
+    };
+
+    #escribirArchivo = async (datos) => {
+        try {
+            return await datos.save();
+        } catch (error) {
+            console.log(error.message);
+            return "Hubo un error al escribir el archivo";
+        }
+    };
+
+    #identifyId = async (id) => {
+        try {
+            const itemId = await this.#itemModel.findById(id);
+            return itemId;
+        } catch (error) {
+            console.log(error.message);
+            return "Hubo un error al identificar el carrito";
+        }
+    };
+
     // Funciones públicas
     addCart = async () => {
         try {
             const cart = new this.#itemModel({ products: [] });
-            await cart.save();
+            await this.#escribirArchivo(cart);
             return "Carrito Agregado";
         } catch (error) {
             console.log(error.message);
@@ -29,7 +59,7 @@ export default class CartManager {
             return "ID no válido";
         }
         try {
-            const respuesta = await this.#itemModel.findById(id);
+            const respuesta = await this.#identifyId(id);
             if(!respuesta){
                 return "Not found";
             } else {
@@ -46,7 +76,7 @@ export default class CartManager {
             return "ID no válido";
         }
         try {
-            const cart = await this.#itemModel.findById(cartId);
+            const cart = await this.#identifyId(cartId);
             const product = await PRODUCT.getProductById(productId);
 
             if (!cart) {
@@ -65,7 +95,7 @@ export default class CartManager {
                 cart.products.push({ id: productId, quantity: 1 });
             }
 
-            await cart.save();
+            await this.#escribirArchivo(cart);
             return productInCart ? "Cantidad Incrementada" : "Producto Agregado";
 
         } catch (error) {
@@ -80,7 +110,7 @@ export default class CartManager {
         }
 
         try {
-            const cart = await this.#itemModel.findById(id);
+            const cart = await this.#identifyId(cartId);
 
             if (!cart) {
                 return "Carrito no encontrado";
@@ -90,7 +120,7 @@ export default class CartManager {
 
             if (productIndex !== -1) {
                 cart.products.splice(productIndex, 1);
-                await cart.save();
+                await this.#escribirArchivo(cart);
                 return "Producto Eliminado";
             } else {
                 return "Producto no encontrado en el carrito";
@@ -108,7 +138,7 @@ export default class CartManager {
         }
 
         try {
-            const cart = await this.#itemModel.findById(id);
+            const cart = await this.#identifyId(cartId);
 
             if (!cart) {
                 return "Carrito no encontrado";
@@ -119,7 +149,7 @@ export default class CartManager {
             if (productIndex !== -1) {
                 cart.products[productIndex].quantity = quantity;
                 console.log(quantity);
-                await cart.save();
+                await this.#escribirArchivo(cart);
                 return "Cantidad de producto modificada";
             } else {
                 return "Producto no encontrado en el carrito";
@@ -131,20 +161,24 @@ export default class CartManager {
         }
     };
 
-    deleteCartById = async (id) => {
+    cleanCart = async (id) => {
         if (!mongoDB.isValidId(id)) {
             return "ID no válido";
         }
+
         try {
-            const cart = await this.#itemModel.findById(id);
+            const cart = await this.#identifyId(id);
+
             if (!cart) {
-                return "El ID no existe";
+                return "Carrito no encontrado";
             }
-            await this.#itemModel.findByIdAndDelete(id);
-            return "Carrito Eliminado";
+
+            cart.products = []; // Vaciar la lista de productos
+            await this.#escribirArchivo(cart); // Guardar los cambios
+            return "Todos los productos han sido eliminados del carrito";
         } catch (error) {
             console.log(error.message);
-            return "Error al eliminar el carrito";
+            return "Error al eliminar los productos del carrito";
         }
     };
 
@@ -167,7 +201,7 @@ export default class CartManager {
 
     getCarts = async () => {
         try {
-            return await this.#itemModel.find().lean();
+            return await this.#readItems();
         } catch (error) {
             console.log(error.message);
             return "Hubo un error al obtener los carritos";

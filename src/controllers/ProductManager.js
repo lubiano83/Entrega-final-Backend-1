@@ -9,13 +9,52 @@ export default class ProductManager {
         this.#itemModel = ProductModel;
     }
 
+    // Funciones privadas
+    #readItems = async (limit, skip, sort, filter) => {
+        try {
+            const items = await this.#itemModel.find(filter).limit(limit).skip(skip).sort(sort).lean();
+            return items;
+        } catch (error) {
+            console.log(error.message);
+            return "Hubo un error al leer el archivo";
+        }
+    };
+
+    #escribirArchivo = async (datos) => {
+        try {
+            return await datos.save();
+        } catch (error) {
+            console.log(error.message);
+            return "Hubo un error al escribir el archivo";
+        }
+    };
+
+    #identifyId = async (id) => {
+        try {
+            const itemId = await this.#itemModel.findById(id);
+            return itemId;
+        } catch (error) {
+            console.log(error.message);
+            return "Hubo un error al identificar el producto";
+        }
+    };
+
     // Funciones públicas
+    countProducts = async () => {
+        try {
+            return await ProductModel.countDocuments();
+        } catch (error) {
+            console.log(error.message);
+            return "Hubo un error al contar los productos";
+        }
+    };
+
     addProduct = async ({ category, title, description, price, thumbnail = [], code, stock, available }) => {
 
         if (!category || !title || !description || !price || !code || !stock) {
             console.log("Todos los campos son obligatorios");
         }
-        const products = await this.#itemModel.find().lean();
+        const products = await this.#readItems();
         try {
             const product = new this.#itemModel({
                 category,
@@ -31,7 +70,7 @@ export default class ProductManager {
             if (sameCode){
                 return "El codigo ya existe";
             }
-            await product.save();
+            await this.#escribirArchivo(product);
             return "Producto agregado correctamente";
         } catch (error) {
             console.log(error.message);
@@ -44,7 +83,7 @@ export default class ProductManager {
             return null;
         }
         try {
-            const product = await this.#itemModel.findById(id);
+            const product = await this.#identifyId(id);
             return product;
         } catch (error) {
             console.log(error.message);
@@ -87,10 +126,10 @@ export default class ProductManager {
             return null;
         }
         try {
-            const product = await this.#itemModel.findById(id);
+            const product = await this.#identifyId(id);
             if (product) {
                 product.available = !product.available;
-                await product.save();
+                await this.#escribirArchivo(product);
                 return product;
             } else {
                 return "Producto no encontrado";
@@ -101,36 +140,9 @@ export default class ProductManager {
         }
     };
 
-    getProducts = async (paramFilters) => {
+    getProducts = async (limit, skip, sort, filter) => {
         try {
-            // return await this.#itemModel.find().lean();
-            const $and = [];
-
-            if (paramFilters?.category) $and.push({ category: paramFilters.category });
-            if (paramFilters?.title) $and.push({ title: paramFilters.title });
-            if (paramFilters?.code) $and.push({ code: paramFilters.code });
-            const filters = $and.length > 0 ? { $and } : {};
-
-            const sort = {
-                asc: { name: 1 },
-                desc: { name: -1 },
-            };
-
-            const paginationOptions = {
-                limit: paramFilters.limit ?? 10,
-                page: paramFilters.page ?? 1,
-                sort: sort[paramFilters?.sort] ?? {},
-                populate: "courses",
-                lean: true,
-            };
-
-            const productsFound = await this.#itemModel.paginate(
-                filters,
-                paginationOptions,
-            );
-
-            console.log(productsFound);
-            return productsFound;
+            return await this.#readItems(limit, skip, sort, filter);
         } catch (error) {
             console.log(error.message);
             return "Hubo un error al obtener los productos";
