@@ -161,11 +161,10 @@ export default class CartManager {
         }
     };
 
-    cleanCart = async (id) => {
+    deleteCartById = async (id) => {
         if (!mongoDB.isValidId(id)) {
             return "ID no válido";
         }
-
         try {
             const cart = await this.#identifyId(id);
 
@@ -173,9 +172,8 @@ export default class CartManager {
                 return "Carrito no encontrado";
             }
 
-            cart.products = []; // Vaciar la lista de productos
-            await this.#escribirArchivo(cart); // Guardar los cambios
-            return "Todos los productos han sido eliminados del carrito";
+            await this.#itemModel.findByIdAndDelete(id);
+            return "Carrito Eliminado";
         } catch (error) {
             console.log(error.message);
             return "Error al eliminar los productos del carrito";
